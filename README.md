@@ -58,6 +58,25 @@ Todas hacen lo mismo (el mismo reskin); cambia cómo se activa y cómo se repart
 
 ---
 
+## ¿Tengo que actualizar la extensión en cada cambio?
+
+Depende de qué cambies:
+
+- **Diseñando (iterar rápido):** usa el **userscript**. En Tampermonkey editas →
+  Guardar → **F5** en la página. Sin recargar nada. Cuando el diseño te guste, lo
+  pasas a `extension/content.css`.
+- **Cambios en la extensión cargada localmente:** `chrome://extensions` → botón
+  **↻ recargar** en la tarjeta → **F5**. Es un clic, no una reinstalación.
+- **No tocar la extensión en cada cambio visual (recomendado para repartir):**
+  pon la URL de un `.css` hospedado en `REMOTE_CSS_URL` (arriba de
+  `extension/content.js`). Editas ese archivo en un solo lugar (GitHub Pages,
+  etc.) y **todos reciben el cambio al recargar la página, sin reinstalar**.
+  El `.css` remoto debe tener sus reglas bajo `html.itson-wrap` y ser `https`.
+  `content.css` empaquetado queda como base/fallback. (MV3 permite CSS remoto;
+  **no** permite JS remoto, pero el JS casi no cambia.)
+- **Extensión publicada en la store:** al subir una versión nueva, Chrome
+  actualiza a todos los usuarios solos en unas horas. Tampoco reinstalan.
+
 ## Ajustar el diseño
 
 Los colores y el radio de las tarjetas están como variables `--w-*` al inicio de
