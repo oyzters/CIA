@@ -68,6 +68,14 @@ html.iw-shell #MENU + br{ display:none!important; }
 #iw-search svg{ width:16px; height:16px; color:var(--iw-muted); flex:0 0 auto; }
 #iw-search input{ border:none; background:none; outline:none; color:var(--iw-ink); font:inherit; width:100%; }
 #iw-search input::placeholder{ color:var(--iw-muted); }
+
+/* Neutralizar el reskin de PeopleSoft (input[type=text] con !important) DENTRO de nuestros campos,
+   para que no aparezca "caja dentro de caja". */
+#iw-search input, #iw-navwrap .iw-search input, #iw-topbar input {
+  border:none !important; background:transparent !important; box-shadow:none !important;
+  border-radius:0 !important; padding:0 !important; margin:0 !important; height:auto !important;
+  outline:none !important; color:var(--iw-ink) !important; font:inherit !important; width:100% !important;
+}
 #iw-top .sp{ flex:1; }
 #iw-top .tl{ display:inline-flex; align-items:center; gap:7px; padding:8px 12px; border-radius:9px;
   color:var(--iw-ink2); font-size:13px; font-weight:500; cursor:pointer; text-decoration:none; }
