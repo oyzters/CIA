@@ -16,7 +16,7 @@
     --bg:#0b0d11; --surface:#14171d; --surface2:#1b1f27; --surface3:#22262f;
     --ink:#f4f6f9; --ink2:#c7cdd8; --muted:#93a0b0; --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
     --brand:#5b9dff; --brand2:#8bbaff; --brand-deep:#2f6fe0; --soft:rgba(91,157,255,.12);
-    --ok:#4dcd93;
+    --ok:#8bbaff;
     --radius:16px;
     --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
     --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
@@ -51,7 +51,7 @@
   .btn-ghost:hover{border-color:var(--line2)}
 
   /* hero */
-  .hero{padding:76px 0 40px; display:grid; grid-template-columns:1.05fr 1fr; gap:48px; align-items:center}
+  .hero{padding:104px 0 84px; display:grid; grid-template-columns:1.05fr 1fr; gap:56px; align-items:center}
   .hero h1{font-size:clamp(32px,4.6vw,52px); line-height:1.05; letter-spacing:-.03em; margin:16px 0 0; font-weight:800; text-wrap:balance}
   .hero h1 .g{background:linear-gradient(120deg,var(--brand2),var(--brand)); -webkit-background-clip:text; background-clip:text; color:transparent}
   .hero p.lead{color:var(--ink2); font-size:18px; margin:18px 0 28px; max-width:52ch}
@@ -83,12 +83,12 @@
   .mock .card .chip{height:7px;width:40%;border-radius:4px;background:var(--soft); margin-top:10px}
 
   /* sections */
-  section{padding:56px 0}
-  .sec-head{text-align:center; max-width:640px; margin:0 auto 40px}
+  section{padding:96px 0}
+  .sec-head{text-align:center; max-width:640px; margin:0 auto 56px}
   .sec-head h2{font-size:clamp(26px,3.4vw,36px); letter-spacing:-.02em; margin:12px 0 10px; font-weight:800; text-wrap:balance}
   .sec-head p{color:var(--muted); font-size:16px; margin:0}
 
-  .features{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+  .features{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
   .feat{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:24px; transition:border-color .15s, transform .15s}
   .feat:hover{border-color:var(--line2); transform:translateY(-3px)}
   .feat .fi{width:44px; height:44px; border-radius:12px; display:grid; place-items:center; background:var(--soft); color:var(--brand2); margin-bottom:14px}
@@ -97,7 +97,7 @@
   .feat p{margin:0; color:var(--muted); font-size:14px}
 
   /* install */
-  .install{background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:36px; display:grid; grid-template-columns:1fr 1fr; gap:36px}
+  .install{background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:44px; display:grid; grid-template-columns:1fr 1fr; gap:48px}
   .steps{counter-reset:s; display:flex; flex-direction:column; gap:4px}
   .step{display:grid; grid-template-columns:34px 1fr; gap:14px; padding:12px 0; border-top:1px solid var(--line)}
   .step:first-child{border-top:none}
@@ -113,7 +113,7 @@
   .install .note b{color:var(--ink)}
 
   /* team */
-  .team{display:grid; grid-template-columns:repeat(2,1fr); gap:16px; max-width:720px; margin:0 auto}
+  .team{display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:720px; margin:0 auto}
   .member{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; display:flex; align-items:center; gap:15px}
   .member .av{width:52px; height:52px; border-radius:14px; display:grid; place-items:center; font-weight:700; font-size:18px; color:#fff;
     background:linear-gradient(150deg,var(--brand),var(--brand-deep))}
