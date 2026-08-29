@@ -104,8 +104,18 @@ var REMOTE_CSS_URL = "";
   }
 
   /* ---------- SHELL nivel B (solo homepage) ---------- */
-  function relay(orig){ // dispara la navegación real de PeopleSoft
-    return function(e){ e.preventDefault(); try{ orig.click(); }catch(err){ if(orig.href) location.href=orig.href; } };
+  // Navega DIRECTO a la URL del link (evita addExtraParam/saveWarning de PeopleSoft,
+  // que rompen entre frames de distintos puertos por CSP y document.domain).
+  function relay(orig){
+    return function(e){
+      e.preventDefault();
+      var href=''; try{ href = orig.href || orig.getAttribute('href') || ''; }catch(err){}
+      if(href && href.indexOf('javascript:')!==0){
+        try{ window.top.location.href = href; return; }catch(err){}
+        try{ location.href = href; return; }catch(err){}
+      }
+      try{ orig.click(); }catch(err){}   // ultimo recurso (href javascript:)
+    };
   }
   function txt(el){ return (el.textContent||'').replace(/\s+/g,' ').trim(); }
 
@@ -284,9 +294,10 @@ var REMOTE_CSS_URL = "";
     });
     var q=wrap.querySelector('#iw-navq');
     if(q) q.addEventListener('keydown', function(e){
-      if(e.key!=='Enter') return;
-      var oi=document.querySelector('input[name="SEARCH_TEXT"]'), go=document.querySelector('a[name="Go"]');
-      if(oi&&go){ oi.value=q.value; go.click(); }
+      if(e.key!=='Enter' || !q.value.trim()) return;
+      var form=document.querySelector('form[name="srchnav"]');
+      var action=form ? (form.getAttribute('action')||'') : '';
+      if(action){ window.top.location.href = action + (action.indexOf('?')<0?'?':'&') + 'SEARCH_TEXT=' + encodeURIComponent(q.value); }
     });
 
     document.documentElement.classList.add('iw-nav-built');
