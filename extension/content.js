@@ -320,7 +320,6 @@ var REMOTE_CSS_URL = "";
     applyReskin();
     applyTheme();
     applyRoles();
-    tuneFrameset();
     if(enabled){ buildShell(); buildNavSidebar(); buildHeaderBar(); }
     else { removeShell(); removeNavSidebar(); removeHeaderBar(); }
   }
@@ -357,7 +356,6 @@ var REMOTE_CSS_URL = "";
     injectRemoteCss();
     document.documentElement.classList.toggle('itson-wrap', enabled);
     applyRoles();
-    tuneFrameset();
     if(enabled && document.getElementById('MENU')){
       if(!document.getElementById('iw-shell')) buildShell();
       else hideOriginals();   // re-ocultar lo que un postback haya re-dibujado
