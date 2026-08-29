@@ -49,6 +49,24 @@ var REMOTE_CSS_URL = "";
     book:'<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 19a2 2 0 012-2h13"/>',
     folder:'<path d="M3 7h6l2 2h10v11H3z"/>'
   };
+  // color por categoría (energía tipo dashboard, duotono suave sobre oscuro)
+  function colorFor(name){
+    var t=(name||'').toLowerCase();
+    if(t.indexOf('autoservicio')>=0) return ['#5b9dff','rgba(91,157,255,.15)'];
+    if(t.indexOf('inscrip')>=0) return ['#a78bfa','rgba(167,139,250,.16)'];
+    if(t.indexOf('finanz')>=0||t.indexOf('pago')>=0||t.indexOf('cuenta')>=0) return ['#2dd4bf','rgba(45,212,191,.15)'];
+    if(t.indexOf('datos')>=0||t.indexOf('personal')>=0||t.indexOf('direccion')>=0) return ['#38bdf8','rgba(56,189,248,.15)'];
+    if(t.indexOf('registro')>=0||t.indexOf('calific')>=0||t.indexOf('académic')>=0||t.indexOf('academic')>=0) return ['#f59e0b','rgba(245,158,11,.16)'];
+    if(t.indexOf('progreso')>=0||t.indexOf('gradua')>=0) return ['#34d399','rgba(52,211,153,.15)'];
+    if(t.indexOf('convalida')>=0) return ['#f472b6','rgba(244,114,182,.16)'];
+    if(t.indexOf('admisi')>=0) return ['#818cf8','rgba(129,140,248,.15)'];
+    if(t.indexOf('trámite')>=0||t.indexOf('tramite')>=0) return ['#fb923c','rgba(251,146,60,.16)'];
+    if(t.indexOf('seguro')>=0) return ['#10b981','rgba(16,185,129,.15)'];
+    if(t.indexOf('alumnado')>=0||t.indexOf('alumno')>=0||t.indexOf('tutor')>=0) return ['#60a5fa','rgba(96,165,250,.15)'];
+    if(t.indexOf('comunidad')>=0) return ['#f472b6','rgba(244,114,182,.15)'];
+    if(t.indexOf('informe')>=0) return ['#38bdf8','rgba(56,189,248,.15)'];
+    return ['#5b9dff','rgba(91,157,255,.15)'];
+  }
   function iconFor(name){
     var t=(name||'').toLowerCase();
     if(t.indexOf('autoservicio')>=0) return ICON.self;
@@ -164,11 +182,11 @@ var REMOTE_CSS_URL = "";
     var side='<aside id="iw-side"><div id="iw-brand">'+brandBadge()+'<div class="iw-bt"><b>CIA ITSON</b><span>Autoservicio</span></div></div><nav id="iw-nav">';
     if(nav.folders.length){
       side+='<div class="g">Menú principal</div>';
-      nav.folders.forEach(function(f,i){ side+='<a data-k="f'+i+'">'+ic(iconFor(f.text))+'<span>'+f.text+'</span></a>'; });
+      nav.folders.forEach(function(f,i){ var col=colorFor(f.text); side+='<a data-k="f'+i+'" style="--c:'+col[0]+'"><span class="iw-ico">'+ic(iconFor(f.text))+'</span><span>'+f.text+'</span></a>'; });
     }
     if(nav.leaves.length){
       side+='<div class="g">Sistema</div>';
-      nav.leaves.forEach(function(f,i){ side+='<a data-k="l'+i+'">'+ic(iconFor(f.text))+'<span>'+f.text+'</span></a>'; });
+      nav.leaves.forEach(function(f,i){ var col=colorFor(f.text); side+='<a data-k="l'+i+'" style="--c:'+col[0]+'"><span class="iw-ico">'+ic(iconFor(f.text))+'</span><span>'+f.text+'</span></a>'; });
     }
     side+='</nav></aside>';
 
@@ -189,8 +207,9 @@ var REMOTE_CSS_URL = "";
       + '<p class="lede">Accede a tu información y actividades de autoservicio: inscripciones, calificaciones, pagos y trámites, todo desde aquí.</p>'
       + '<h2 class="sect">Secciones <span class="c">'+nav.folders.length+'</span></h2><div id="iw-grid">';
     nav.folders.forEach(function(f,i){
-      main+='<a class="card" data-k="f'+i+'"><div class="top"><div class="tile">'+ic(iconFor(f.text))+'</div>'
-        + '<div><h3>'+f.text+'</h3></div>'
+      var col=colorFor(f.text);
+      main+='<a class="card" data-k="f'+i+'" style="--c:'+col[0]+';--cs:'+col[1]+'"><div class="top"><div class="tile">'+ic(iconFor(f.text))+'</div>'
+        + '<div class="iw-cardhd"><h3>'+f.text+'</h3></div>'
         + '<svg class="arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></div>'
         + (f.desc?'<p class="desc">'+f.desc+'</p>':'') + '</a>';
     });
@@ -271,8 +290,9 @@ var REMOTE_CSS_URL = "";
     var others   = items.filter(function(i){return !i.indented && !i.selected;});
 
     function itemHtml(it,k){
-      return '<a class="iw-item'+(it.selected?' on':'')+'" data-k="'+k+'">'
-        + ic(iconFor(it.text)) + '<span>'+it.text+'</span></a>';
+      var col=colorFor(it.text);
+      return '<a class="iw-item'+(it.selected?' on':'')+'" data-k="'+k+'" style="--c:'+col[0]+'">'
+        + '<span class="iw-ico">'+ic(iconFor(it.text))+'</span><span>'+it.text+'</span></a>';
     }
 
     var h='<div class="iw-brand">'+brandBadge()+'<div class="iw-brandtxt"><b>CIA ITSON</b><span>'
@@ -387,16 +407,22 @@ var REMOTE_CSS_URL = "";
       if(!head) return;
       var title=txt(head); if(!title) return;
       var desc=txt(td.querySelector('.EOPP_SCADDITIONALTEXT'))||head.getAttribute('title')||'';
-      var links='', seen={};
+      var links='', seen={}, kc=0;
       [].forEach.call(td.querySelectorAll('a.EOPP_SCCHILDCONTENTLINK'), function(a){
-        var t=txt(a); if(!t||seen[a.href]) return; seen[a.href]=1;
+        var t=txt(a); if(!t||seen[a.href]) return; seen[a.href]=1; kc++;
         links+='<a class="iw-link" data-h="'+esc(a.href)+'" data-f="0" href="'+esc(a.href)+'"><span class="iw-dot"></span>'+esc(t)+'</a>';
       });
       var more=td.querySelector('a.EOPP_SCMORELINK');
+      var moreN=more ? (parseInt((txt(more).match(/\d+/)||[0])[0],10)||0) : 0;
+      var totalN=kc+moreN;
       if(more){ links+='<a class="iw-morelink" data-h="'+esc(more.href)+'" data-f="1" href="'+esc(more.href)+'">'+esc(txt(more))+' →</a>'; }
-      cardsHtml+='<div class="card">'
+      var col=colorFor(title);
+      cardsHtml+='<div class="card" style="--c:'+col[0]+';--cs:'+col[1]+'">'
         + '<div class="top" data-h="'+esc(head.href)+'" data-f="'+(isFolder?'1':'0')+'">'
-        + '<div class="tile">'+ic(iconFor(title))+'</div><div class="iw-cardhd"><h3>'+esc(title)+'</h3></div>'
+        + '<div class="tile">'+ic(iconFor(title))+'</div>'
+        + '<div class="iw-cardhd"><h3>'+esc(title)+'</h3>'
+        + (totalN?'<span class="iw-count"><i></i>'+totalN+(totalN===1?' acceso':' accesos')+'</span>':'')
+        + '</div>'
         + '<svg class="arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"></path></svg>'
         + '</div>'
         + (desc?'<p class="desc">'+esc(desc)+'</p>':'')
