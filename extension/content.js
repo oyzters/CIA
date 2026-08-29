@@ -31,8 +31,9 @@ var REMOTE_CSS_URL = "";
   var LOGO_DARK = '', LOGO_LIGHT = '';
   try { LOGO_DARK = api.runtime.getURL('assets/logo-dark.png'); LOGO_LIGHT = api.runtime.getURL('assets/logo-light.png'); } catch (e) {}
   function logoSrc(){ return theme === 'dark' ? LOGO_DARK : LOGO_LIGHT; }
-  function logoImg(cls){ return '<img class="'+(cls||'iw-logo')+'" data-logo alt="CIA ITSON" src="'+logoSrc()+'">'; }
-  function paintLogos(){ document.querySelectorAll('img[data-logo]').forEach(function(im){ im.src = logoSrc(); }); }
+  function paintLogos(){}
+  // marca: badge con monograma academico + wordmark
+  function brandBadge(){ return '<div class="iw-badge">'+ic('<path d="M12 3 2 8l10 5 8-4"/><path d="M6 11v5c0 1.5 2.7 2.6 6 2.6s6-1.1 6-2.6v-5"/>')+'</div>'; }
 
   /* ---------- iconos ---------- */
   function ic(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
@@ -161,10 +162,10 @@ var REMOTE_CSS_URL = "";
     var shell=document.createElement('div'); shell.id='iw-shell';
 
     /* sidebar */
-    var side='<aside id="iw-side"><div id="iw-brand"><b>CIA ITSON</b><span>Autoservicio</span></div><nav id="iw-nav">';
+    var side='<aside id="iw-side"><div id="iw-brand">'+brandBadge()+'<div class="iw-bt"><b>CIA ITSON</b><span>Autoservicio</span></div></div><nav id="iw-nav">';
     if(nav.folders.length){
       side+='<div class="g">Menú principal</div>';
-      nav.folders.forEach(function(f,i){ side+='<a data-k="f'+i+'"'+(i===0?' class="on"':'')+'>'+ic(iconFor(f.text))+'<span>'+f.text+'</span></a>'; });
+      nav.folders.forEach(function(f,i){ side+='<a data-k="f'+i+'">'+ic(iconFor(f.text))+'<span>'+f.text+'</span></a>'; });
     }
     if(nav.leaves.length){
       side+='<div class="g">Sistema</div>';
@@ -275,7 +276,7 @@ var REMOTE_CSS_URL = "";
         + ic(iconFor(it.text)) + '<span>'+it.text+'</span></a>';
     }
 
-    var h='<div class="iw-brand"><div class="iw-brandtxt"><b>CIA ITSON</b><span>'
+    var h='<div class="iw-brand">'+brandBadge()+'<div class="iw-brandtxt"><b>CIA ITSON</b><span>'
       + (current?current.text:'Portal') + '</span></div>'
       + '<button class="iw-themebtn" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button></div>';
     h+='<div class="iw-search">'+ic('<circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/>')

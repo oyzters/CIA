@@ -37,9 +37,14 @@ html.iw-shell #MENU + br{ display:none!important; }
   background:var(--iw-surface); border-right:1px solid var(--iw-line);
   display:flex; flex-direction:column; font-family:var(--iw-ui);
 }
-#iw-brand{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:20px 20px 16px; border-bottom:1px solid var(--iw-line); }
-#iw-brand b{ font-size:16px; font-weight:700; letter-spacing:-.01em; color:var(--iw-ink); line-height:1.1; }
-#iw-brand span{ font-size:11.5px; color:var(--iw-muted); }
+.iw-badge{ flex:0 0 auto; display:grid; place-items:center; color:#fff;
+  background:linear-gradient(150deg,var(--iw-brand),var(--iw-brand2));
+  box-shadow:0 4px 14px -4px var(--iw-brand), inset 0 1px 0 rgba(255,255,255,.25); }
+#iw-brand{ display:flex; align-items:center; gap:11px; padding:18px 18px 16px; border-bottom:1px solid var(--iw-line); }
+#iw-brand .iw-badge{ width:38px; height:38px; border-radius:11px; }
+#iw-brand .iw-badge svg{ width:20px; height:20px; }
+#iw-brand .iw-bt b{ display:block; font-size:15px; font-weight:700; letter-spacing:-.01em; color:var(--iw-ink); line-height:1.15; }
+#iw-brand .iw-bt span{ font-size:11px; color:var(--iw-muted); }
 #iw-nav{ padding:12px 10px; overflow-y:auto; flex:1; }
 #iw-nav .g{ font-size:10.5px; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--iw-muted); padding:14px 12px 6px; }
 #iw-nav a{ display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:9px;
@@ -102,9 +107,13 @@ html.iw-shell #MENU + br{ display:none!important; }
 /* ocultar TODO lo nativo del frame NAV salvo nuestro sidebar (a prueba de re-render) */
 html.iw-nav-built body > *:not(#iw-navwrap) { display:none !important; }
 html.iw-nav.itson-wrap #iw-navwrap { font-family:var(--iw-ui); padding:10px 8px 24px; }
-#iw-navwrap .iw-brand { position:relative; display:flex; align-items:center; padding:12px 10px 14px; margin-bottom:2px; border-bottom:1px solid var(--iw-line); }
-#iw-navwrap .iw-brandtxt b { display:block; font-size:15px; font-weight:700; letter-spacing:-.01em; color:var(--iw-ink); line-height:1.15; }
-#iw-navwrap .iw-brandtxt span { font-size:11px; color:var(--iw-muted); }
+#iw-navwrap .iw-brand { position:relative; display:flex; align-items:center; gap:10px; padding:12px 10px 14px; margin-bottom:2px; border-bottom:1px solid var(--iw-line); }
+#iw-navwrap .iw-badge { width:34px; height:34px; border-radius:10px; }
+#iw-navwrap .iw-badge svg { width:18px; height:18px; }
+#iw-navwrap .iw-brandtxt { min-width:0; }
+#iw-navwrap .iw-brandtxt b { display:block; font-size:14px; font-weight:700; letter-spacing:-.01em; color:var(--iw-ink); line-height:1.15; }
+#iw-navwrap .iw-brandtxt span { display:block; font-size:10.5px; color:var(--iw-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#iw-navwrap .iw-themebtn { position:absolute; top:9px; right:8px; width:28px; height:28px; }
 #iw-navwrap .iw-themebtn { position:absolute; top:10px; right:8px; background:var(--iw-surface2); border:1px solid var(--iw-line);
   width:30px; height:30px; border-radius:9px; color:var(--iw-ink2); cursor:pointer; display:grid; place-items:center; }
 #iw-navwrap .iw-themebtn svg { width:15px; height:15px; }
