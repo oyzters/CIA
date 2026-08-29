@@ -296,14 +296,17 @@ html.itson-wrap .wrap-login,
 html.itson-wrap .login-form {
   background: var(--w-card) !important;
   border: 1px solid var(--w-line) !important;
-  border-radius: 20px !important;
+  border-radius: 24px !important;
   box-shadow: var(--w-shadow) !important;
-  padding: 38px 34px !important;
-  max-width: 430px !important;
+  padding: 44px 40px !important;
+  max-width: 410px !important;
   width: 100% !important;
   margin: 7vh auto !important;
   box-sizing: border-box !important;
 }
+/* colapsar el campo oculto (contraseña en la portada CIA) para no dejar hueco */
+html.itson-wrap .wrap-input:has(> input[style*="display: none"]),
+html.itson-wrap .wrap-input:has(> input[style*="display:none"]) { display: none !important; }
 /* si el login-form va anidado dentro de wrap-login, evitar doble tarjeta */
 html.itson-wrap .wrap-login .login-form {
   background: transparent !important; border: none !important;
@@ -313,31 +316,34 @@ html.itson-wrap .wrap-login .login-form {
 html.itson-wrap img.logoITSON { max-width: 175px !important; height: auto !important; margin: 0 auto 6px !important; display: block !important; }
 html.itson-wrap img.logoCIA { max-width: 150px !important; height: auto !important; margin: 4px auto 22px !important; display: block !important; }
 
-html.itson-wrap .wrap-input { margin-bottom: 14px !important; }
+html.itson-wrap .wrap-input { margin-bottom: 13px !important; }
 html.itson-wrap input.input {
-  width: 100% !important; box-sizing: border-box !important;
+  width: 100% !important; box-sizing: border-box !important; min-height: 52px !important;
   background: var(--w-surface2) !important;
-  border: 1px solid var(--w-line) !important; border-radius: 12px !important;
-  padding: 13px 15px !important; color: var(--w-ink) !important;
-  font-size: 14px !important; outline: none !important;
-  transition: border-color .14s, box-shadow .14s;
+  border: 1px solid var(--w-line) !important; border-radius: 14px !important;
+  padding: 15px 16px !important; color: var(--w-ink) !important;
+  font-size: 15px !important; line-height: 1.2 !important; outline: none !important;
+  transition: border-color .15s, box-shadow .15s, background .15s;
 }
 html.itson-wrap input.input:focus {
-  border-color: var(--w-accent) !important;
-  box-shadow: 0 0 0 3px rgba(91,157,255,.18) !important;
+  border-color: var(--w-accent) !important; background: var(--w-card) !important;
+  box-shadow: 0 0 0 4px rgba(91,157,255,.16) !important;
 }
 html.itson-wrap input.input::placeholder { color: var(--w-muted) !important; }
 
-html.itson-wrap .container-login-form-btn { margin-top: 6px !important; }
+html.itson-wrap .container-login-form-btn { margin-top: 18px !important; }
 html.itson-wrap .login-form-btn {
-  width: 100% !important; box-sizing: border-box !important;
+  width: 100% !important; box-sizing: border-box !important; min-height: 54px !important;
+  display: inline-flex !important; align-items: center !important; justify-content: center !important;
   background: var(--w-accent) !important; color: #fff !important;
-  border: none !important; border-radius: 12px !important; padding: 13px !important;
-  font-weight: 700 !important; font-size: 14px !important; letter-spacing: .03em !important;
+  border: none !important; border-radius: 14px !important; padding: 16px 22px !important;
+  font-weight: 700 !important; font-size: 14.5px !important; letter-spacing: .05em !important;
   text-transform: uppercase !important; cursor: pointer !important;
-  box-shadow: 0 6px 18px -6px var(--w-accent) !important; transition: filter .12s;
+  box-shadow: 0 10px 24px -10px var(--w-accent), inset 0 1px 0 rgba(255,255,255,.22) !important;
+  transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
 }
-html.itson-wrap .login-form-btn:hover { filter: brightness(1.07) !important; }
+html.itson-wrap .login-form-btn:hover { filter: brightness(1.06) !important; box-shadow: 0 14px 30px -10px var(--w-accent), inset 0 1px 0 rgba(255,255,255,.25) !important; }
+html.itson-wrap .login-form-btn:active { transform: translateY(1px) !important; }
 
 html.itson-wrap .text-password, html.itson-wrap .text-password .txt1 { color: var(--w-muted) !important; }
 html.itson-wrap .text-password .txt2, html.itson-wrap a.txt2 { color: var(--w-accent) !important; font-weight: 600 !important; }
