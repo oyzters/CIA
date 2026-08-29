@@ -400,7 +400,7 @@ var REMOTE_CSS_URL = "";
     var pageTitle=txt(document.querySelector('.EOPP_SCPAGETITLESECTION'))||'Autoservicio';
     var pageDesc=txt(document.querySelector('.EOPP_SCPAGEDESCRSECTION'))||'';
 
-    var cardsHtml='';
+    var cardsHtml='', quick=[];
     [].forEach.call(nodes, function(td){
       var isFolder=td.classList.contains('EOPP_SCSECTIONFOLDER');
       var head=td.querySelector(isFolder?'a.EOPP_SCSECTIONFOLDERLINK':'a.EOPP_SCSECTIONCONTENTLINK');
@@ -416,7 +416,15 @@ var REMOTE_CSS_URL = "";
       var moreN=more ? (parseInt((txt(more).match(/\d+/)||[0])[0],10)||0) : 0;
       var totalN=kc+moreN;
       if(more){ links+='<a class="iw-morelink" data-h="'+esc(more.href)+'" data-f="1" href="'+esc(more.href)+'">'+esc(txt(more))+' →</a>'; }
-      var col=colorFor(title);
+      var col=colorFor(title), iconHtml=ic(iconFor(title));
+      // acceso rápido: primer sub-link real de la carpeta, o el componente directo
+      if(isFolder){
+        var fk=null, kk=td.querySelectorAll('a.EOPP_SCCHILDCONTENTLINK');
+        for(var qi=0; qi<kk.length; qi++){ if(txt(kk[qi])){ fk=kk[qi]; break; } }
+        if(fk) quick.push({ t:txt(fk), href:fk.href, c:col, ic:iconHtml });
+      } else {
+        quick.push({ t:title, href:head.href, c:col, ic:iconHtml });
+      }
       cardsHtml+='<div class="card" style="--c:'+col[0]+';--cs:'+col[1]+'">'
         + '<div class="top" data-h="'+esc(head.href)+'" data-f="'+(isFolder?'1':'0')+'">'
         + '<div class="tile">'+ic(iconFor(title))+'</div>'
@@ -431,9 +439,19 @@ var REMOTE_CSS_URL = "";
     });
     if(!cardsHtml) return;
 
+    var quickHtml='';
+    quick.slice(0,6).forEach(function(q){
+      quickHtml+='<a class="iw-qcard" data-h="'+esc(q.href)+'" data-f="0" href="'+esc(q.href)+'" style="--c:'+q.c[0]+';--cs:'+q.c[1]+'">'
+        + '<span class="iw-qi">'+q.ic+'</span>'
+        + '<span class="iw-qt"><b>'+esc(q.t)+'</b><em>Acceso directo</em></span>'
+        + '<svg class="iw-qa" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></a>';
+    });
+
     var main=document.createElement('main'); main.id='iw-tiles'; main.setAttribute('data-sig',sig);
     main.innerHTML='<p class="eyebrow">Menú principal</p><h1>'+esc(pageTitle)+'</h1>'
       + (pageDesc?'<p class="lede">'+esc(pageDesc)+'</p>':'')
+      + (quickHtml?'<div class="iw-qlabel">Accesos rápidos</div><div class="iw-quick">'+quickHtml+'</div>':'')
+      + '<h2 class="iw-gridlabel">Todas las secciones</h2>'
       + '<div id="iw-grid">'+cardsHtml+'</div>';
     document.body.appendChild(main);
 
