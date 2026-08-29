@@ -346,6 +346,81 @@ var REMOTE_CSS_URL = "";
     document.documentElement.classList.remove('iw-hdr-built');
   }
 
+  /* ---------- TILES del contenido (AppHP) -> tarjetas ---------- */
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  // navega a un tile: carpetas -> recargan el frameset (psp); componentes -> abren el componente
+  function tileNav(href, isFolder){
+    if(!href) return;
+    if(isFolder){
+      try{
+        var u=new URL(href, location.href);
+        var pt=u.searchParams.get('pt_fname')||u.searchParams.get('fname')||'';
+        var fp=u.searchParams.get('FolderPath')||'';
+        if(pt){
+          var base=u.origin+u.pathname.replace('/psc/','/psp/');
+          window.top.location.href = base+'?pt_fname='+encodeURIComponent(pt)+'&FolderPath='+encodeURIComponent(fp)+'&IsFolder=true';
+          return;
+        }
+      }catch(e){}
+    }
+    window.top.location.href = href;
+  }
+
+  function buildTiles(){
+    if(frameRole()!=='CONTENT' || !enabled) return;
+    var u=''; try{ u=location.href; }catch(e){}
+    if(u.indexOf('IScript_AppHP')<0) return;              // solo paginas de tiles, no componentes con datos
+    var nodes=document.querySelectorAll('td.EOPP_SCSECTIONFOLDER, td.EOPP_SCSECTIONCONTENT');
+    var sig=String(nodes.length)+'|'+u.slice(-48);
+    var ex=document.getElementById('iw-tiles');
+    if(ex){ if(ex.getAttribute('data-sig')===sig) return; ex.remove(); }
+    if(!nodes.length) return;
+
+    var pageTitle=txt(document.querySelector('.EOPP_SCPAGETITLESECTION'))||'Autoservicio';
+    var pageDesc=txt(document.querySelector('.EOPP_SCPAGEDESCRSECTION'))||'';
+
+    var cardsHtml='';
+    [].forEach.call(nodes, function(td){
+      var isFolder=td.classList.contains('EOPP_SCSECTIONFOLDER');
+      var head=td.querySelector(isFolder?'a.EOPP_SCSECTIONFOLDERLINK':'a.EOPP_SCSECTIONCONTENTLINK');
+      if(!head) return;
+      var title=txt(head); if(!title) return;
+      var desc=txt(td.querySelector('.EOPP_SCADDITIONALTEXT'))||head.getAttribute('title')||'';
+      var chips='', seen={};
+      [].forEach.call(td.querySelectorAll('a.EOPP_SCCHILDCONTENTLINK'), function(a){
+        var t=txt(a); if(!t||seen[a.href]) return; seen[a.href]=1;
+        chips+='<a class="iw-chip" data-h="'+esc(a.href)+'" data-f="0" href="'+esc(a.href)+'">'+esc(t)+'</a>';
+      });
+      var more=td.querySelector('a.EOPP_SCMORELINK');
+      if(more){ chips+='<a class="iw-chip iw-more" data-h="'+esc(more.href)+'" data-f="1" href="'+esc(more.href)+'">'+esc(txt(more))+'</a>'; }
+      cardsHtml+='<div class="card">'
+        + '<div class="top" data-h="'+esc(head.href)+'" data-f="'+(isFolder?'1':'0')+'">'
+        + '<div class="tile">'+ic(iconFor(title))+'</div><div><h3>'+esc(title)+'</h3></div>'
+        + '<svg class="arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"></path></svg>'
+        + '</div>'
+        + (desc?'<p class="desc">'+esc(desc)+'</p>':'')
+        + (chips?'<div class="iw-chips">'+chips+'</div>':'')
+        + '</div>';
+    });
+    if(!cardsHtml) return;
+
+    var main=document.createElement('main'); main.id='iw-tiles'; main.setAttribute('data-sig',sig);
+    main.innerHTML='<p class="eyebrow">Menú principal</p><h1>'+esc(pageTitle)+'</h1>'
+      + (pageDesc?'<p class="lede">'+esc(pageDesc)+'</p>':'')
+      + '<div id="iw-grid">'+cardsHtml+'</div>';
+    document.body.appendChild(main);
+
+    main.querySelectorAll('[data-h]').forEach(function(el){
+      el.addEventListener('click', function(e){ e.preventDefault(); tileNav(el.getAttribute('data-h'), el.getAttribute('data-f')==='1'); });
+    });
+    document.documentElement.classList.add('iw-tiles-built');
+  }
+  function removeTiles(){
+    document.querySelectorAll('#iw-tiles').forEach(function(m){ m.remove(); });
+    document.documentElement.classList.remove('iw-tiles-built');
+  }
+
   /* ---------- estado ---------- */
   function apply(){
     injectRemoteCss();
@@ -353,8 +428,8 @@ var REMOTE_CSS_URL = "";
     applyTheme();
     applyRoles();
     tuneFrameset();
-    if(enabled){ buildShell(); buildNavSidebar(); buildHeaderBar(); }
-    else { removeShell(); removeNavSidebar(); removeHeaderBar(); }
+    if(enabled){ buildShell(); buildNavSidebar(); buildHeaderBar(); buildTiles(); }
+    else { removeShell(); removeNavSidebar(); removeHeaderBar(); removeTiles(); }
   }
 
   function paintFab(){ var f=document.getElementById('itson-wrap-fab'); if(f){ f.textContent=enabled?'Wrap ON':'Wrap OFF'; f.style.background=enabled?'#2f5bea':'#8a93a5'; } }
@@ -395,6 +470,7 @@ var REMOTE_CSS_URL = "";
     }
     if(enabled && frameRole()==='NAV') buildNavSidebar();  // se auto-protege por firma
     if(enabled && frameRole()==='HDR') buildHeaderBar();
+    if(enabled && frameRole()==='CONTENT') buildTiles();
     if(document.querySelector('frameset') && document.getElementById('iw-shell')) removeShell(); // nunca el shell fijo sobre un frameset
   });
   try{ mo.observe(document.documentElement, { childList:true, subtree:true }); }catch(e){}
