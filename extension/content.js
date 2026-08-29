@@ -398,4 +398,28 @@ var REMOTE_CSS_URL = "";
     if(document.querySelector('frameset') && document.getElementById('iw-shell')) removeShell(); // nunca el shell fijo sobre un frameset
   });
   try{ mo.observe(document.documentElement, { childList:true, subtree:true }); }catch(e){}
+
+  /* ---- CAPTURA TEMPORAL (debug): Ctrl+Shift+Y copia el DOM del frame enfocado ---- */
+  function iwCopyText(s){
+    try{
+      var ta=document.createElement('textarea'); ta.value=s;
+      ta.style.cssText='position:fixed;top:0;left:0;opacity:0;z-index:2147483647';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      var ok=document.execCommand('copy'); ta.remove(); return ok;
+    }catch(e){ return false; }
+  }
+  document.addEventListener('keydown', function(e){
+    if(!(e.ctrlKey && e.shiftKey && (e.key==='Y'||e.key==='y'))) return;
+    e.preventDefault();
+    try{
+      var c=document.body.cloneNode(true);
+      c.querySelectorAll('script,style,noscript,link,img,#iw-shell,#iw-navwrap,#iw-topbar,#itson-wrap-fab,#screenity-ui').forEach(function(el){ el.remove(); });
+      c.querySelectorAll('input,textarea,select').forEach(function(el){ el.removeAttribute('value'); try{el.value='';}catch(_){}} );
+      var out='### '+(location.href||'')+'\n'+c.innerHTML.slice(0,55000);
+      var ok=iwCopyText(out);
+      var f=document.getElementById('itson-wrap-fab');
+      if(f){ var old=f.textContent; f.textContent = ok?'DOM copiado ✓':'copia falló'; setTimeout(function(){ paintFab(); }, 1500); }
+      console.log('ITSON Wrap capture: '+(ok?'copiado '+out.length+' chars':'fallo'));
+    }catch(err){ console.log('ITSON Wrap capture error', err); }
+  }, true);
 })();
