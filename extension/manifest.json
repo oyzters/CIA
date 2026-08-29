@@ -7,7 +7,8 @@
     {
       "matches": [
         "*://smartweb1.itson.edu.mx/*",
-        "*://smartweb2.itson.edu.mx/*"
+        "*://smartweb2.itson.edu.mx/*",
+        "*://apps9.itson.edu.mx/*"
       ],
       "css": ["content.css", "shell.css"],
       "js": ["content.js"],
@@ -23,7 +24,7 @@
   "web_accessible_resources": [
     {
       "resources": ["assets/logo-dark.png", "assets/logo-light.png"],
-      "matches": ["*://smartweb1.itson.edu.mx/*", "*://smartweb2.itson.edu.mx/*"]
+      "matches": ["*://smartweb1.itson.edu.mx/*", "*://smartweb2.itson.edu.mx/*", "*://apps9.itson.edu.mx/*"]
     }
   ]
 }

@@ -284,6 +284,67 @@ html.itson-wrap .PSGROUPBOXLABEL {
   font-family: var(--w-font) !important; font-weight: 600 !important; color: var(--w-ink) !important;
 }
 
+/* ============================================================
+   LOGIN CIA ITSON — clases "precia" compartidas por el login de
+   PeopleSoft (smartweb) y la portada CIA (apps9). Estilo dark premium.
+   ============================================================ */
+html.itson-wrap .wrapper,
+html.itson-wrap .limiter,
+html.itson-wrap .container-login { background: transparent !important; }
+
+html.itson-wrap .wrap-login,
+html.itson-wrap .login-form {
+  background: var(--w-card) !important;
+  border: 1px solid var(--w-line) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--w-shadow) !important;
+  padding: 38px 34px !important;
+  max-width: 430px !important;
+  width: 100% !important;
+  margin: 7vh auto !important;
+  box-sizing: border-box !important;
+}
+/* si el login-form va anidado dentro de wrap-login, evitar doble tarjeta */
+html.itson-wrap .wrap-login .login-form {
+  background: transparent !important; border: none !important;
+  box-shadow: none !important; padding: 0 !important; margin: 0 !important; max-width: none !important;
+}
+
+html.itson-wrap img.logoITSON { max-width: 175px !important; height: auto !important; margin: 0 auto 6px !important; display: block !important; }
+html.itson-wrap img.logoCIA { max-width: 150px !important; height: auto !important; margin: 4px auto 22px !important; display: block !important; }
+
+html.itson-wrap .wrap-input { margin-bottom: 14px !important; }
+html.itson-wrap input.input {
+  width: 100% !important; box-sizing: border-box !important;
+  background: var(--w-surface2) !important;
+  border: 1px solid var(--w-line) !important; border-radius: 12px !important;
+  padding: 13px 15px !important; color: var(--w-ink) !important;
+  font-size: 14px !important; outline: none !important;
+  transition: border-color .14s, box-shadow .14s;
+}
+html.itson-wrap input.input:focus {
+  border-color: var(--w-accent) !important;
+  box-shadow: 0 0 0 3px rgba(91,157,255,.18) !important;
+}
+html.itson-wrap input.input::placeholder { color: var(--w-muted) !important; }
+
+html.itson-wrap .container-login-form-btn { margin-top: 6px !important; }
+html.itson-wrap .login-form-btn {
+  width: 100% !important; box-sizing: border-box !important;
+  background: var(--w-accent) !important; color: #fff !important;
+  border: none !important; border-radius: 12px !important; padding: 13px !important;
+  font-weight: 700 !important; font-size: 14px !important; letter-spacing: .03em !important;
+  text-transform: uppercase !important; cursor: pointer !important;
+  box-shadow: 0 6px 18px -6px var(--w-accent) !important; transition: filter .12s;
+}
+html.itson-wrap .login-form-btn:hover { filter: brightness(1.07) !important; }
+
+html.itson-wrap .text-password, html.itson-wrap .text-password .txt1 { color: var(--w-muted) !important; }
+html.itson-wrap .text-password .txt2, html.itson-wrap a.txt2 { color: var(--w-accent) !important; font-weight: 600 !important; }
+html.itson-wrap a[href*="avisodeprivacidad"],
+html.itson-wrap a[href*="avisos-de-privacidad"],
+html.itson-wrap a[href*="Aviso"] { color: var(--w-muted) !important; }
+
 /* boton flotante inyectado por content.js */
 #itson-wrap-fab {
   position: fixed; right: 16px; bottom: 16px; z-index: 2147483647;
