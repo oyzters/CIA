@@ -68,14 +68,27 @@ var REMOTE_CSS_URL = "";
   /* ---------- paginas de seccion (frameset) ---------- */
   function frameName(){ try { return window.name || ''; } catch (e) { return ''; } }
 
+  // Rol del frame por su URL (FIJA), no por window.name (PeopleSoft lo muta al navegar).
+  //   TOP     = documento superior (frameset)
+  //   NAV     = arbol de navegacion  (IScript_PT_NAV_INFRAME)
+  //   HDR     = cabecera             (IScript_UniHeader_Frame)
+  //   CONTENT = contenido real       (el resto)
+  function frameRole(){
+    if(window.top === window.self) return 'TOP';
+    var u=''; try { u = location.href || ''; } catch (e) {}
+    if(u.indexOf('IScript_PT_NAV_INFRAME') >= 0) return 'NAV';
+    if(u.indexOf('IScript_UniHeader_Frame') >= 0) return 'HDR';
+    return 'CONTENT';
+  }
+
   // cada frame se marca segun su rol para que el CSS lo skinne como sidebar/topbar/contenido
   function applyRoles(){
     // OJO: PeopleSoft reasigna window.name del doc superior al navegar; los roles
     // (y sus reglas de ocultamiento) solo deben aplicar en FRAMES HIJOS reales.
-    var n = frameName(), de = document.documentElement, child = (window.top !== window.self);
-    de.classList.toggle('iw-nav', enabled && child && n === 'NAV');
-    de.classList.toggle('iw-hdr', enabled && child && n === 'UniversalHeader');
-    de.classList.toggle('iw-content', enabled && child && n === 'TargetContent');
+    var r = frameRole(), de = document.documentElement;
+    de.classList.toggle('iw-nav', enabled && r === 'NAV');
+    de.classList.toggle('iw-hdr', enabled && r === 'HDR');
+    de.classList.toggle('iw-content', enabled && r === 'CONTENT');
   }
 
   // redimensiona el frameset (solo desde el doc superior): NAV mas ancho, header mas delgado
@@ -216,7 +229,7 @@ var REMOTE_CSS_URL = "";
   }
 
   function buildNavSidebar(){
-    if(window.top===window.self || frameName()!=='NAV' || !enabled) return;  // solo frame hijo NAV
+    if(frameRole()!=='NAV' || !enabled) return;  // solo el frame de navegacion (por URL)
     var sig = navSignature();
     var existings = document.querySelectorAll('#iw-navwrap');
     if(existings.length === 1 && existings[0].getAttribute('data-sig') === sig) return; // misma seccion: nada
@@ -286,7 +299,7 @@ var REMOTE_CSS_URL = "";
 
   /* ---------- TOPBAR del frame UniversalHeader (paginas de seccion) ---------- */
   function buildHeaderBar(){
-    if(window.top===window.self || frameName()!=='UniversalHeader' || !enabled) return;  // solo frame hijo header
+    if(frameRole()!=='HDR' || !enabled) return;  // solo el frame de cabecera (por URL)
     if(document.getElementById('iw-topbar')) return;
 
     var links=[];
@@ -329,7 +342,7 @@ var REMOTE_CSS_URL = "";
   function paintFab(){ var f=document.getElementById('itson-wrap-fab'); if(f){ f.textContent=enabled?'Wrap ON':'Wrap OFF'; f.style.background=enabled?'#2f5bea':'#8a93a5'; } }
   // el fab va: en la homepage (top con body normal) o, en paginas frameset, dentro del frame TargetContent
   function canMountFab(){
-    if(frameName()==='TargetContent') return true;
+    if(frameRole()==='CONTENT') return true;
     if(window.top===window.self && document.body && document.body.tagName!=='FRAMESET') return true;
     return false;
   }
@@ -362,8 +375,8 @@ var REMOTE_CSS_URL = "";
       if(!document.getElementById('iw-shell')) buildShell();
       else hideOriginals();   // re-ocultar lo que un postback haya re-dibujado
     }
-    if(enabled && frameName()==='NAV') buildNavSidebar();  // se auto-protege por firma
-    if(enabled && frameName()==='UniversalHeader') buildHeaderBar();
+    if(enabled && frameRole()==='NAV') buildNavSidebar();  // se auto-protege por firma
+    if(enabled && frameRole()==='HDR') buildHeaderBar();
     if(document.querySelector('frameset') && document.getElementById('iw-shell')) removeShell(); // nunca el shell fijo sobre un frameset
   });
   try{ mo.observe(document.documentElement, { childList:true, subtree:true }); }catch(e){}
