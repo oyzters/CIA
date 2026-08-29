@@ -70,10 +70,12 @@ var REMOTE_CSS_URL = "";
 
   // cada frame se marca segun su rol para que el CSS lo skinne como sidebar/topbar/contenido
   function applyRoles(){
-    var n = frameName(), de = document.documentElement;
-    de.classList.toggle('iw-nav', enabled && n === 'NAV');
-    de.classList.toggle('iw-hdr', enabled && n === 'UniversalHeader');
-    de.classList.toggle('iw-content', enabled && n === 'TargetContent');
+    // OJO: PeopleSoft reasigna window.name del doc superior al navegar; los roles
+    // (y sus reglas de ocultamiento) solo deben aplicar en FRAMES HIJOS reales.
+    var n = frameName(), de = document.documentElement, child = (window.top !== window.self);
+    de.classList.toggle('iw-nav', enabled && child && n === 'NAV');
+    de.classList.toggle('iw-hdr', enabled && child && n === 'UniversalHeader');
+    de.classList.toggle('iw-content', enabled && child && n === 'TargetContent');
   }
 
   // redimensiona el frameset (solo desde el doc superior): NAV mas ancho, header mas delgado
@@ -214,7 +216,7 @@ var REMOTE_CSS_URL = "";
   }
 
   function buildNavSidebar(){
-    if(frameName()!=='NAV' || !enabled) return;
+    if(window.top===window.self || frameName()!=='NAV' || !enabled) return;  // solo frame hijo NAV
     var sig = navSignature();
     var existings = document.querySelectorAll('#iw-navwrap');
     if(existings.length === 1 && existings[0].getAttribute('data-sig') === sig) return; // misma seccion: nada
@@ -284,7 +286,7 @@ var REMOTE_CSS_URL = "";
 
   /* ---------- TOPBAR del frame UniversalHeader (paginas de seccion) ---------- */
   function buildHeaderBar(){
-    if(frameName()!=='UniversalHeader' || !enabled) return;
+    if(window.top===window.self || frameName()!=='UniversalHeader' || !enabled) return;  // solo frame hijo header
     if(document.getElementById('iw-topbar')) return;
 
     var links=[];
