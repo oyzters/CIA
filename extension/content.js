@@ -387,20 +387,20 @@ var REMOTE_CSS_URL = "";
       if(!head) return;
       var title=txt(head); if(!title) return;
       var desc=txt(td.querySelector('.EOPP_SCADDITIONALTEXT'))||head.getAttribute('title')||'';
-      var chips='', seen={};
+      var links='', seen={};
       [].forEach.call(td.querySelectorAll('a.EOPP_SCCHILDCONTENTLINK'), function(a){
         var t=txt(a); if(!t||seen[a.href]) return; seen[a.href]=1;
-        chips+='<a class="iw-chip" data-h="'+esc(a.href)+'" data-f="0" href="'+esc(a.href)+'">'+esc(t)+'</a>';
+        links+='<a class="iw-link" data-h="'+esc(a.href)+'" data-f="0" href="'+esc(a.href)+'"><span class="iw-dot"></span>'+esc(t)+'</a>';
       });
       var more=td.querySelector('a.EOPP_SCMORELINK');
-      if(more){ chips+='<a class="iw-chip iw-more" data-h="'+esc(more.href)+'" data-f="1" href="'+esc(more.href)+'">'+esc(txt(more))+'</a>'; }
+      if(more){ links+='<a class="iw-morelink" data-h="'+esc(more.href)+'" data-f="1" href="'+esc(more.href)+'">'+esc(txt(more))+' →</a>'; }
       cardsHtml+='<div class="card">'
         + '<div class="top" data-h="'+esc(head.href)+'" data-f="'+(isFolder?'1':'0')+'">'
-        + '<div class="tile">'+ic(iconFor(title))+'</div><div><h3>'+esc(title)+'</h3></div>'
+        + '<div class="tile">'+ic(iconFor(title))+'</div><div class="iw-cardhd"><h3>'+esc(title)+'</h3></div>'
         + '<svg class="arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"></path></svg>'
         + '</div>'
         + (desc?'<p class="desc">'+esc(desc)+'</p>':'')
-        + (chips?'<div class="iw-chips">'+chips+'</div>':'')
+        + (links?'<div class="iw-links">'+links+'</div>':'')
         + '</div>';
     });
     if(!cardsHtml) return;
