@@ -220,21 +220,15 @@ html.itson-wrap input[name="SEARCH_TEXT"] {
    y redimensiona el frameset (NAV mas ancho, header mas delgado).
    ============================================================ */
 
-/* NAV -> barra lateral tipo sidebar */
+/* NAV -> limpieza ligera (sin romper la estructura de tablas del arbol).
+   El rediseno real del arbol -> sidebar lo hace content.js (buildNavSidebar),
+   una vez que tengamos el DOM interno del frame NAV. */
 html.iw-nav.itson-wrap, html.iw-nav.itson-wrap body { background: var(--w-card) !important; margin: 0 !important; }
-html.iw-nav.itson-wrap body { padding: 8px 6px !important; }
+html.iw-nav.itson-wrap a {
+  font-family: var(--w-font) !important; color: var(--w-ink) !important; text-decoration: none !important;
+}
+html.iw-nav.itson-wrap a:hover { color: var(--w-accent) !important; text-decoration: underline !important; }
 html.iw-nav.itson-wrap .PTNAVBACKGROUND { background: var(--w-card) !important; }
-html.iw-nav.itson-wrap a.PSNAVPARENTLINK,
-html.iw-nav.itson-wrap a.PTNAVLINK,
-html.iw-nav.itson-wrap a.PSHYPERLINK {
-  display: inline-block !important; font-family: var(--w-font) !important;
-  font-size: 13px !important; font-weight: 500 !important; color: var(--w-ink) !important;
-  text-decoration: none !important; padding: 5px 9px !important; border-radius: 8px !important;
-}
-html.iw-nav.itson-wrap a.PSNAVPARENTLINK:hover,
-html.iw-nav.itson-wrap a.PTNAVLINK:hover {
-  background: rgba(47,91,234,.10) !important; color: var(--w-accent) !important;
-}
 
 /* UniversalHeader -> topbar limpio */
 html.iw-hdr.itson-wrap, html.iw-hdr.itson-wrap body {
