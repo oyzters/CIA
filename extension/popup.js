@@ -1,18 +1,35 @@
 var api = (typeof browser !== 'undefined') ? browser : chrome;
-var KEY = 'itson_wrap_enabled';
-var btn = document.getElementById('t');
+var EK = 'itson_wrap_enabled', TK = 'itson_wrap_theme';
 
-function render(v) {
-  btn.textContent = v ? 'Activado' : 'Desactivado';
-  btn.setAttribute('data-on', v ? '1' : '0');
+var sw = document.getElementById('sw');
+var st = document.getElementById('st');
+var segBtns = document.querySelectorAll('.seg button[data-theme]');
+
+function paintEnabled(v){
+  sw.setAttribute('aria-checked', v ? 'true' : 'false');
+  st.textContent = v ? 'Activada' : 'Desactivada';
+}
+function paintTheme(v){
+  segBtns.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-theme') === v); });
 }
 
-api.storage.local.get({ itson_wrap_enabled: true }, function (r) { render(r.itson_wrap_enabled); });
+api.storage.local.get({ itson_wrap_enabled: true, itson_wrap_theme: 'dark' }, function(r){
+  paintEnabled(r.itson_wrap_enabled);
+  paintTheme(r.itson_wrap_theme);
+});
 
-btn.addEventListener('click', function () {
-  api.storage.local.get({ itson_wrap_enabled: true }, function (r) {
-    var v = !r.itson_wrap_enabled;
-    api.storage.local.set({ itson_wrap_enabled: v });
-    render(v);
+function toggleEnabled(){
+  var v = sw.getAttribute('aria-checked') !== 'true';
+  api.storage.local.set({ itson_wrap_enabled: v });
+  paintEnabled(v);
+}
+sw.addEventListener('click', toggleEnabled);
+sw.addEventListener('keydown', function(e){ if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); toggleEnabled(); } });
+
+segBtns.forEach(function(b){
+  b.addEventListener('click', function(){
+    var v = b.getAttribute('data-theme');
+    api.storage.local.set({ itson_wrap_theme: v });
+    paintTheme(v);
   });
 });
