@@ -198,7 +198,10 @@ var REMOTE_CSS_URL = "";
     if(window.top===window.self && !document.getElementById('itson-wrap-fab')) mountFab();
     injectRemoteCss();
     document.documentElement.classList.toggle('itson-wrap', enabled);
-    if(enabled && document.getElementById('MENU') && !document.getElementById('iw-shell')) buildShell();
+    if(enabled && document.getElementById('MENU')){
+      if(!document.getElementById('iw-shell')) buildShell();
+      else hideOriginals();   // re-ocultar lo que un postback haya re-dibujado
+    }
   });
   try{ mo.observe(document.documentElement, { childList:true, subtree:true }); }catch(e){}
 })();

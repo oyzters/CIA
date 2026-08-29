@@ -24,6 +24,9 @@ html.iw-shell.iw-dark{
 /* ocultar el layout viejo y reservar espacio para la cascara */
 html.iw-shell body{ background:var(--iw-bg)!important; margin:0!important; padding:70px 0 0 264px!important; }
 html.iw-shell .iw-orig{ display:none!important; }
+/* respaldo por CSS: aunque un postback re-dibuje el menú nativo, queda oculto */
+html.iw-shell #MENU{ display:none!important; }
+html.iw-shell #MENU + br{ display:none!important; }
 
 #iw-shell, #iw-shell *{ box-sizing:border-box; }
 #iw-shell{ font-family:var(--iw-ui); }
