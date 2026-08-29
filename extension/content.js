@@ -54,6 +54,29 @@ var REMOTE_CSS_URL = "";
   /* ---------- reskin base ---------- */
   function applyReskin(){ document.documentElement.classList.toggle('itson-wrap', enabled); }
 
+  /* ---------- paginas de seccion (frameset) ---------- */
+  function frameName(){ try { return window.name || ''; } catch (e) { return ''; } }
+
+  // cada frame se marca segun su rol para que el CSS lo skinne como sidebar/topbar/contenido
+  function applyRoles(){
+    var n = frameName(), de = document.documentElement;
+    de.classList.toggle('iw-nav', enabled && n === 'NAV');
+    de.classList.toggle('iw-hdr', enabled && n === 'UniversalHeader');
+    de.classList.toggle('iw-content', enabled && n === 'TargetContent');
+  }
+
+  // redimensiona el frameset (solo desde el doc superior): NAV mas ancho, header mas delgado
+  function tuneFrameset(){
+    if (window.top !== window.self) return;
+    var outer = document.querySelector('frameset[rows]');
+    if (!outer) return;
+    var inner = document.querySelector('frameset[cols]');
+    try {
+      outer.rows = enabled ? '56,*' : '65,*';
+      if (inner) inner.cols = enabled ? '244,*' : '195,*';
+    } catch (e) {}
+  }
+
   /* ---------- SHELL nivel B (solo homepage) ---------- */
   function relay(orig){ // dispara la navegación real de PeopleSoft
     return function(e){ e.preventDefault(); try{ orig.click(); }catch(err){ if(orig.href) location.href=orig.href; } };
@@ -174,12 +197,20 @@ var REMOTE_CSS_URL = "";
   function apply(){
     injectRemoteCss();
     applyReskin();
+    applyRoles();
+    tuneFrameset();
     if(enabled) buildShell(); else removeShell();
   }
 
   function paintFab(){ var f=document.getElementById('itson-wrap-fab'); if(f){ f.textContent=enabled?'Wrap ON':'Wrap OFF'; f.style.background=enabled?'#2f5bea':'#8a93a5'; } }
+  // el fab va: en la homepage (top con body normal) o, en paginas frameset, dentro del frame TargetContent
+  function canMountFab(){
+    if(frameName()==='TargetContent') return true;
+    if(window.top===window.self && document.body && document.body.tagName!=='FRAMESET') return true;
+    return false;
+  }
   function mountFab(){
-    if(window.top!==window.self || document.getElementById('itson-wrap-fab') || !document.body) return;
+    if(!canMountFab() || document.getElementById('itson-wrap-fab') || !document.body) return;
     var fab=document.createElement('button'); fab.id='itson-wrap-fab'; fab.type='button';
     fab.textContent=enabled?'Wrap ON':'Wrap OFF'; fab.style.background=enabled?'#2f5bea':'#8a93a5';
     fab.style.zIndex='2147483600';
@@ -195,9 +226,11 @@ var REMOTE_CSS_URL = "";
 
   /* PeopleSoft re-renderiza por postbacks: re-aplicar de forma idempotente */
   var mo=new MutationObserver(function(){
-    if(window.top===window.self && !document.getElementById('itson-wrap-fab')) mountFab();
+    if(!document.getElementById('itson-wrap-fab')) mountFab();
     injectRemoteCss();
     document.documentElement.classList.toggle('itson-wrap', enabled);
+    applyRoles();
+    tuneFrameset();
     if(enabled && document.getElementById('MENU')){
       if(!document.getElementById('iw-shell')) buildShell();
       else hideOriginals();   // re-ocultar lo que un postback haya re-dibujado

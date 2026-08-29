@@ -214,6 +214,59 @@ html.itson-wrap input[name="SEARCH_TEXT"] {
   outline: none !important;
 }
 
+/* ============================================================
+   PAGINAS DE SECCION (frameset): cada frame se reskina por su rol.
+   content.js pone iw-nav / iw-hdr / iw-content en <html> segun window.name
+   y redimensiona el frameset (NAV mas ancho, header mas delgado).
+   ============================================================ */
+
+/* NAV -> barra lateral tipo sidebar */
+html.iw-nav.itson-wrap, html.iw-nav.itson-wrap body { background: var(--w-card) !important; margin: 0 !important; }
+html.iw-nav.itson-wrap body { padding: 8px 6px !important; }
+html.iw-nav.itson-wrap .PTNAVBACKGROUND { background: var(--w-card) !important; }
+html.iw-nav.itson-wrap a.PSNAVPARENTLINK,
+html.iw-nav.itson-wrap a.PTNAVLINK,
+html.iw-nav.itson-wrap a.PSHYPERLINK {
+  display: inline-block !important; font-family: var(--w-font) !important;
+  font-size: 13px !important; font-weight: 500 !important; color: var(--w-ink) !important;
+  text-decoration: none !important; padding: 5px 9px !important; border-radius: 8px !important;
+}
+html.iw-nav.itson-wrap a.PSNAVPARENTLINK:hover,
+html.iw-nav.itson-wrap a.PTNAVLINK:hover {
+  background: rgba(47,91,234,.10) !important; color: var(--w-accent) !important;
+}
+
+/* UniversalHeader -> topbar limpio */
+html.iw-hdr.itson-wrap, html.iw-hdr.itson-wrap body {
+  background: var(--w-card) !important; margin: 0 !important;
+  border-bottom: 1px solid var(--w-line) !important;
+}
+html.iw-hdr.itson-wrap .globeBar,
+html.iw-hdr.itson-wrap .buttonBar { background: transparent !important; }
+html.iw-hdr.itson-wrap a.headerLinkActive {
+  color: var(--w-ink) !important; font-weight: 600 !important; text-decoration: none !important;
+}
+html.iw-hdr.itson-wrap a.headerLinkActive:hover { color: var(--w-accent) !important; }
+
+/* TargetContent -> fondo de contenido con aire */
+html.iw-content.itson-wrap, html.iw-content.itson-wrap body { background: var(--w-bg) !important; }
+html.iw-content.itson-wrap body { padding: 18px 22px !important; }
+
+/* pestañas de componente (mi programa de clases | lista previsiones | ...) */
+html.itson-wrap .PSTABENABLED, html.itson-wrap .PSTABSELECTED,
+html.itson-wrap .PSTABLONGENABLED, html.itson-wrap .PSTABLONGSELECTED,
+html.itson-wrap .PSTABENABLEDNAV, html.itson-wrap .PSTABSELECTEDNAV {
+  font-family: var(--w-font) !important; font-weight: 500 !important;
+}
+html.itson-wrap .PSTABSELECTED, html.itson-wrap .PSTABLONGSELECTED,
+html.itson-wrap .PSTABSELECTEDNAV { color: var(--w-accent) !important; }
+
+/* titulos de pagina de componente */
+html.itson-wrap .PAGROUPDIVIDER, html.itson-wrap .PAGROUPBOXLABELINVISIBLE,
+html.itson-wrap .PSGROUPBOXLABEL {
+  font-family: var(--w-font) !important; font-weight: 600 !important; color: var(--w-ink) !important;
+}
+
 /* boton flotante inyectado por content.js */
 #itson-wrap-fab {
   position: fixed; right: 16px; bottom: 16px; z-index: 2147483647;
