@@ -14,7 +14,18 @@ var REMOTE_CSS_URL = "";
   'use strict';
   var api = (typeof browser !== 'undefined') ? browser : chrome;
   var KEY = 'itson_wrap_enabled';
+  var TKEY = 'itson_wrap_theme';
   var enabled = true;
+  var theme = 'dark';   // default: oscuro (paleta del mockup)
+
+  function themeIcon(){
+    return ic(theme === 'dark'
+      ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>'
+      : '<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>');
+  }
+  function applyTheme(){ document.documentElement.classList.toggle('iw-dark', enabled && theme === 'dark'); }
+  function paintThemeBtns(){ document.querySelectorAll('[data-theme-toggle]').forEach(function(b){ b.innerHTML = themeIcon(); }); }
+  function setTheme(v){ theme = v; try { api.storage.local.set({ itson_wrap_theme: v }); } catch (e) {} applyTheme(); paintThemeBtns(); }
 
   /* ---------- iconos ---------- */
   function ic(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
@@ -136,7 +147,7 @@ var REMOTE_CSS_URL = "";
       + '<div class="sp"></div>'
       + '<a class="tl" data-hdr="inicio">'+ic('<path d="M3 9.5 12 3l9 6.5V21H3z"/>')+'<span>Inicio</span></a>'
       + '<a class="tl" data-hdr="favorito">'+ic('<path d="M12 3l2.9 6 6.6.6-5 4.4 1.5 6.5L12 17l-6 3.5L7.5 14l-5-4.4 6.6-.6z"/>')+'<span>Favoritos</span></a>'
-      + '<button class="ic" id="iw-theme" title="Tema">'+ic('<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>')+'</button>'
+      + '<button class="ic" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button>'
       + '<a class="tl" data-hdr="desconex">'+ic('<path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3"/>')+'<span>Salir</span></a>'
       + '<div class="av">'+ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>')+'</div>'
       + '</div>';
@@ -180,8 +191,9 @@ var REMOTE_CSS_URL = "";
       if(oi && go){ oi.value=q.value; go.click(); }
     });
     // tema
-    var tb=shell.querySelector('#iw-theme');
-    if(tb) tb.addEventListener('click', function(){ document.documentElement.classList.toggle('iw-dark'); });
+    shell.querySelectorAll('[data-theme-toggle]').forEach(function(b){
+      b.addEventListener('click', function(){ setTheme(theme==='dark'?'light':'dark'); });
+    });
 
     hideOriginals();
     document.documentElement.classList.add('iw-shell');
@@ -194,9 +206,21 @@ var REMOTE_CSS_URL = "";
   }
 
   /* ---------- SIDEBAR del frame NAV (paginas de seccion) ---------- */
+  // firma de la navegacion actual: si cambia (otra seccion), reconstruimos
+  function navSignature(){
+    var sel=document.querySelector('a.PTNAVSELPARENTLINK');
+    var n=document.querySelectorAll('a.PSNAVPARENTLINK, a.PTNAVLINK').length;
+    return (sel?(sel.getAttribute('name')||''):'') + '#' + n;
+  }
+
   function buildNavSidebar(){
     if(frameName()!=='NAV' || !enabled) return;
-    if(document.getElementById('iw-navwrap')) return;
+    var sig = navSignature();
+    var existing = document.getElementById('iw-navwrap');
+    if(existing){
+      if(existing.getAttribute('data-sig') === sig) return;  // misma seccion: nada que hacer
+      existing.remove();                                     // cambio de seccion: reconstruir
+    }
 
     var anchors = document.querySelectorAll('a.PTNAVSELPARENTLINK, a.PSNAVPARENTLINK, a.PTNAVLINK');
     var items=[], seen={};
@@ -223,7 +247,8 @@ var REMOTE_CSS_URL = "";
     }
 
     var h='<div class="iw-brand"><div class="m">iT</div><div><b>ITSON</b><span>'
-      + (current?current.text:'Portal') + '</span></div></div>';
+      + (current?current.text:'Portal') + '</span></div>'
+      + '<button class="iw-themebtn" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button></div>';
     h+='<div class="iw-search">'+ic('<circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/>')
       + '<input id="iw-navq" placeholder="Buscar…" autocomplete="off"></div>';
     h+='<nav class="iw-navlist">';
@@ -235,10 +260,14 @@ var REMOTE_CSS_URL = "";
     h+='</nav>';
 
     var wrap=document.createElement('div'); wrap.id='iw-navwrap'; wrap.innerHTML=h;
+    wrap.setAttribute('data-sig', sig);
     document.body.appendChild(wrap);
 
     wrap.querySelectorAll('[data-k]').forEach(function(n){
       var o=map[n.getAttribute('data-k')]; if(o) n.addEventListener('click', relay(o));
+    });
+    wrap.querySelectorAll('[data-theme-toggle]').forEach(function(b){
+      b.addEventListener('click', function(){ setTheme(theme==='dark'?'light':'dark'); });
     });
     var q=wrap.querySelector('#iw-navq');
     if(q) q.addEventListener('keydown', function(e){
@@ -259,6 +288,7 @@ var REMOTE_CSS_URL = "";
   function apply(){
     injectRemoteCss();
     applyReskin();
+    applyTheme();
     applyRoles();
     tuneFrameset();
     if(enabled){ buildShell(); buildNavSidebar(); }
@@ -282,10 +312,14 @@ var REMOTE_CSS_URL = "";
   }
   function setEnabled(v){ enabled=v; try{ api.storage.local.set({ itson_wrap_enabled:v }); }catch(e){} apply(); paintFab(); }
 
-  try{ api.storage.local.get({ itson_wrap_enabled:true }, function(r){ enabled=r.itson_wrap_enabled; apply(); mountFab(); }); }
+  try{ api.storage.local.get({ itson_wrap_enabled:true, itson_wrap_theme:'dark' }, function(r){ enabled=r.itson_wrap_enabled; theme=r.itson_wrap_theme; apply(); mountFab(); }); }
   catch(e){ apply(); mountFab(); }
 
-  try{ api.storage.onChanged.addListener(function(ch,area){ if(area==='local'&&ch[KEY]){ enabled=ch[KEY].newValue; apply(); paintFab(); } }); }catch(e){}
+  try{ api.storage.onChanged.addListener(function(ch,area){
+    if(area!=='local') return;
+    if(ch[KEY]){ enabled=ch[KEY].newValue; apply(); paintFab(); }
+    if(ch[TKEY]){ theme=ch[TKEY].newValue; applyTheme(); paintThemeBtns(); }
+  }); }catch(e){}
 
   /* PeopleSoft re-renderiza por postbacks: re-aplicar de forma idempotente */
   var mo=new MutationObserver(function(){
@@ -298,7 +332,8 @@ var REMOTE_CSS_URL = "";
       if(!document.getElementById('iw-shell')) buildShell();
       else hideOriginals();   // re-ocultar lo que un postback haya re-dibujado
     }
-    if(enabled && frameName()==='NAV' && !document.getElementById('iw-navwrap')) buildNavSidebar();
+    if(enabled && frameName()==='NAV') buildNavSidebar();  // se auto-protege por firma
+    if(document.querySelector('frameset') && document.getElementById('iw-shell')) removeShell(); // nunca el shell fijo sobre un frameset
   });
   try{ mo.observe(document.documentElement, { childList:true, subtree:true }); }catch(e){}
 })();

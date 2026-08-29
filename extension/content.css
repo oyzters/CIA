@@ -8,6 +8,7 @@
 :root {
   --w-bg: #eef1f6;
   --w-card: #ffffff;
+  --w-surface2: #f4f6fb;
   --w-ink: #1c2230;
   --w-muted: #5b6472;
   --w-line: #e3e7ee;
@@ -15,6 +16,18 @@
   --w-radius: 12px;
   --w-shadow: 0 1px 2px rgba(20,30,55,.06), 0 8px 24px rgba(20,30,55,.08);
   --w-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* modo oscuro (paleta del mockup) — aplica a reskin + shell en todos los frames */
+html.iw-dark {
+  --w-bg: #0d1120;
+  --w-card: #161c2c;
+  --w-surface2: #0e1526;
+  --w-ink: #e9edf8;
+  --w-muted: #98a2bb;
+  --w-line: #242c42;
+  --w-accent: #6f8dff;
+  --w-shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 30px rgba(0,0,0,.5);
 }
 
 /* base tipografia / fondo */
@@ -65,7 +78,7 @@ html.itson-wrap textarea {
   border: 1px solid var(--w-line) !important;
   border-radius: 8px !important;
   padding: 7px 10px !important;
-  background: #fff !important;
+  background: var(--w-card) !important;
   color: var(--w-ink) !important;
   outline: none !important;
   transition: border-color .12s, box-shadow .12s;
@@ -113,12 +126,12 @@ html.itson-wrap table.PSLEVEL2GRID {
   border: 1px solid var(--w-line) !important;
   border-radius: 10px !important;
   overflow: hidden !important;
-  background: #fff !important;
+  background: var(--w-card) !important;
 }
 html.itson-wrap th.PSLEVEL1GRIDCOLUMNHDR,
 html.itson-wrap .PSLEVEL1GRIDCOLUMNHDR,
 html.itson-wrap .PSLEVEL2GRIDCOLUMNHDR {
-  background: #f4f6fb !important;
+  background: var(--w-surface2) !important;
   color: var(--w-muted) !important;
   font-weight: 600 !important;
   text-transform: uppercase !important;
@@ -132,7 +145,7 @@ html.itson-wrap tr.PSLEVEL1GRIDEVENROW td {
   padding: 8px 10px !important;
   border-bottom: 1px solid var(--w-line) !important;
 }
-html.itson-wrap .PSLEVEL1GRIDEVENROW { background: #fafbfe !important; }
+html.itson-wrap .PSLEVEL1GRIDEVENROW { background: var(--w-surface2) !important; }
 
 /* mensajes */
 html.itson-wrap .PSERROR,
@@ -208,7 +221,7 @@ html.itson-wrap input[name="SEARCH_TEXT"] {
   border: 1px solid var(--w-line) !important;
   border-radius: 8px !important;
   padding: 7px 10px !important;
-  background: #fff !important;
+  background: var(--w-card) !important;
   color: var(--w-ink) !important;
   width: 190px !important;
   outline: none !important;
@@ -237,6 +250,7 @@ html.iw-hdr.itson-wrap, html.iw-hdr.itson-wrap body {
 }
 html.iw-hdr.itson-wrap .globeBar,
 html.iw-hdr.itson-wrap .buttonBar { background: transparent !important; }
+html.iw-hdr.itson-wrap img { display: none !important; }   /* logo/curva vieja del header */
 html.iw-hdr.itson-wrap a.headerLinkActive {
   color: var(--w-ink) !important; font-weight: 600 !important; text-decoration: none !important;
 }
