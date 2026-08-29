@@ -250,7 +250,7 @@ html.iw-hdr.itson-wrap, html.iw-hdr.itson-wrap body {
 }
 html.iw-hdr.itson-wrap .globeBar,
 html.iw-hdr.itson-wrap .buttonBar { background: transparent !important; }
-html.iw-hdr.itson-wrap img { display: none !important; }   /* logo/curva vieja del header */
+html.iw-hdr.itson-wrap img:not([data-logo]) { display: none !important; }   /* logo/curva vieja del header (no nuestro logo) */
 html.iw-hdr.itson-wrap a.headerLinkActive {
   color: var(--w-ink) !important; font-weight: 600 !important; text-decoration: none !important;
 }

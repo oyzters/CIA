@@ -37,13 +37,9 @@ html.iw-shell #MENU + br{ display:none!important; }
   background:var(--iw-surface); border-right:1px solid var(--iw-line);
   display:flex; flex-direction:column; font-family:var(--iw-ui);
 }
-#iw-brand{ display:flex; align-items:center; gap:11px; padding:16px 18px; border-bottom:1px solid var(--iw-line); }
-#iw-brand .m{ width:38px; height:38px; border-radius:11px; flex:0 0 auto; color:#fff;
-  background:linear-gradient(145deg,var(--iw-brand),var(--iw-brand2));
-  display:grid; place-items:center; font-weight:700; font-size:15px; letter-spacing:.02em;
-  box-shadow:0 4px 12px -3px var(--iw-brand); }
-#iw-brand b{ font-weight:600; font-size:15px; color:var(--iw-ink); display:block; line-height:1.1; }
-#iw-brand span{ font-size:11px; color:var(--iw-muted); }
+#iw-brand{ display:flex; flex-direction:column; align-items:flex-start; gap:9px; padding:20px 20px 16px; border-bottom:1px solid var(--iw-line); }
+#iw-brand .iw-logo{ height:34px; width:auto; display:block; }
+#iw-brand .iw-brandcap{ font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--iw-muted); }
 #iw-nav{ padding:12px 10px; overflow-y:auto; flex:1; }
 #iw-nav .g{ font-size:10.5px; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--iw-muted); padding:14px 12px 6px; }
 #iw-nav a{ display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:9px;
@@ -87,11 +83,12 @@ html.iw-shell #MENU + br{ display:none!important; }
 #iw-main .sect .c{ font-weight:500; font-size:12px; color:var(--iw-muted); background:var(--iw-surface2); border:1px solid var(--iw-line); padding:2px 8px; border-radius:20px; }
 
 #iw-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
-#iw-grid a.card{ background:var(--iw-surface); border:1px solid var(--iw-line); border-radius:16px;
-  padding:20px; box-shadow:var(--iw-shadow-sm); display:flex; flex-direction:column; gap:11px;
+#iw-grid a.card{ background:var(--iw-surface); border:1px solid var(--iw-line); border-radius:18px;
+  padding:22px; box-shadow:var(--iw-shadow-sm); display:flex; flex-direction:column; gap:12px;
   text-decoration:none; color:var(--iw-ink); cursor:pointer;
-  transition:transform .14s, box-shadow .14s, border-color .14s; }
-#iw-grid a.card:hover{ transform:translateY(-3px); box-shadow:var(--iw-shadow); border-color:var(--iw-line2); }
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
+#iw-grid a.card:hover{ transform:translateY(-4px); box-shadow:var(--iw-shadow); border-color:var(--iw-brand); }
+#iw-grid .tile{ width:44px; height:44px; border-radius:13px; border:1px solid var(--iw-line); }
 #iw-grid .top{ display:flex; align-items:flex-start; gap:13px; }
 #iw-grid .tile{ width:42px; height:42px; border-radius:12px; flex:0 0 auto; display:grid; place-items:center;
   background:var(--iw-soft); color:var(--iw-brand2); }
@@ -105,11 +102,13 @@ html.iw-shell #MENU + br{ display:none!important; }
 /* ocultar TODO lo nativo del frame NAV salvo nuestro sidebar (a prueba de re-render) */
 html.iw-nav-built body > *:not(#iw-navwrap) { display:none !important; }
 html.iw-nav.itson-wrap #iw-navwrap { font-family:var(--iw-ui); padding:10px 8px 24px; }
-#iw-navwrap .iw-brand { display:flex; align-items:center; gap:10px; padding:6px 8px 12px; }
-#iw-navwrap .iw-themebtn { margin-left:auto; background:var(--iw-surface2); border:1px solid var(--iw-line);
-  width:30px; height:30px; border-radius:8px; color:var(--iw-ink2); cursor:pointer; display:grid; place-items:center; }
+#iw-navwrap .iw-brand { position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:7px; padding:12px 10px 14px; margin-bottom:2px; border-bottom:1px solid var(--iw-line); }
+#iw-navwrap .iw-logo { height:30px; width:auto; display:block; }
+#iw-navwrap .iw-brandcap { font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--iw-muted); }
+#iw-navwrap .iw-themebtn { position:absolute; top:10px; right:8px; background:var(--iw-surface2); border:1px solid var(--iw-line);
+  width:30px; height:30px; border-radius:9px; color:var(--iw-ink2); cursor:pointer; display:grid; place-items:center; }
 #iw-navwrap .iw-themebtn svg { width:15px; height:15px; }
-#iw-navwrap .iw-themebtn:hover { color:var(--iw-ink); }
+#iw-navwrap .iw-themebtn:hover { color:var(--iw-ink); border-color:var(--iw-line2); }
 #iw-navwrap .iw-brand .m { width:34px; height:34px; border-radius:10px; flex:0 0 auto;
   background:linear-gradient(145deg,var(--iw-brand),var(--iw-brand2)); color:#fff;
   display:grid; place-items:center; font-weight:700; font-size:14px; }
@@ -121,19 +120,22 @@ html.iw-nav.itson-wrap #iw-navwrap { font-family:var(--iw-ui); padding:10px 8px 
 #iw-navwrap .iw-search input { border:none; background:none; outline:none; font:inherit; color:var(--iw-ink); width:100%; }
 #iw-navwrap .iw-g { font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
   color:var(--iw-muted); padding:12px 10px 5px; }
-#iw-navwrap a.iw-item { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px;
-  color:var(--iw-ink2); font-size:13px; font-weight:500; text-decoration:none; cursor:pointer; }
-#iw-navwrap a.iw-item svg { width:16px; height:16px; flex:0 0 auto; opacity:.7; }
+#iw-navwrap a.iw-item { position:relative; display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:10px;
+  color:var(--iw-ink2); font-size:13px; font-weight:500; text-decoration:none; cursor:pointer;
+  transition:background .12s, color .12s; }
+#iw-navwrap a.iw-item svg { width:16px; height:16px; flex:0 0 auto; opacity:.65; }
 #iw-navwrap a.iw-item:hover { background:var(--iw-surface2); color:var(--iw-ink); }
 #iw-navwrap a.iw-item.on { background:var(--iw-soft); color:var(--iw-brand2); font-weight:600; }
 #iw-navwrap a.iw-item.on svg { opacity:1; }
+#iw-navwrap a.iw-item.on::before { content:""; position:absolute; left:-1px; top:8px; bottom:8px; width:3px;
+  border-radius:0 3px 3px 0; background:var(--iw-brand); }
 
 /* ===== Topbar reconstruido dentro del frame UniversalHeader (buildHeaderBar) ===== */
 html.iw-hdr-built body > *:not(#iw-topbar) { display:none !important; }
 html.iw-hdr.itson-wrap, html.iw-hdr.itson-wrap body { background:var(--iw-surface) !important; margin:0 !important; overflow:hidden !important; }
 #iw-topbar { display:flex; align-items:center; gap:12px; height:56px; padding:0 22px;
   font-family:var(--iw-ui); background:var(--iw-surface); }
-#iw-topbar .iw-tb-brand { font-weight:600; font-size:14px; color:var(--iw-ink); }
+#iw-topbar .iw-tb-logo { height:26px; width:auto; display:block; }
 #iw-topbar .iw-sp { flex:1; }
 #iw-topbar a.iw-tl { color:var(--iw-ink2); font-size:13px; font-weight:500; text-decoration:none;
   padding:8px 12px; border-radius:9px; cursor:pointer; white-space:nowrap; }

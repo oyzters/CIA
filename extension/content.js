@@ -25,7 +25,14 @@ var REMOTE_CSS_URL = "";
   }
   function applyTheme(){ document.documentElement.classList.toggle('iw-dark', enabled && theme === 'dark'); }
   function paintThemeBtns(){ document.querySelectorAll('[data-theme-toggle]').forEach(function(b){ b.innerHTML = themeIcon(); }); }
-  function setTheme(v){ theme = v; try { api.storage.local.set({ itson_wrap_theme: v }); } catch (e) {} applyTheme(); paintThemeBtns(); }
+  function setTheme(v){ theme = v; try { api.storage.local.set({ itson_wrap_theme: v }); } catch (e) {} applyTheme(); paintThemeBtns(); paintLogos(); }
+
+  // logo (PotroNET) empaquetado en la extension
+  var LOGO_DARK = '', LOGO_LIGHT = '';
+  try { LOGO_DARK = api.runtime.getURL('assets/logo-dark.png'); LOGO_LIGHT = api.runtime.getURL('assets/logo-light.png'); } catch (e) {}
+  function logoSrc(){ return theme === 'dark' ? LOGO_DARK : LOGO_LIGHT; }
+  function logoImg(cls){ return '<img class="'+(cls||'iw-logo')+'" data-logo alt="CIA ITSON" src="'+logoSrc()+'">'; }
+  function paintLogos(){ document.querySelectorAll('img[data-logo]').forEach(function(im){ im.src = logoSrc(); }); }
 
   /* ---------- iconos ---------- */
   function ic(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
@@ -154,8 +161,8 @@ var REMOTE_CSS_URL = "";
     var shell=document.createElement('div'); shell.id='iw-shell';
 
     /* sidebar */
-    var side='<aside id="iw-side"><div id="iw-brand"><div class="m">iT</div>'
-      + '<div><b>ITSON</b><span>Autoservicio</span></div></div><nav id="iw-nav">';
+    var side='<aside id="iw-side"><div id="iw-brand">'+logoImg()
+      + '<div class="iw-brandcap">CIA ITSON</div></div><nav id="iw-nav">';
     if(nav.folders.length){
       side+='<div class="g">Menú principal</div>';
       nav.folders.forEach(function(f,i){ side+='<a data-k="f'+i+'"'+(i===0?' class="on"':'')+'>'+ic(iconFor(f.text))+'<span>'+f.text+'</span></a>'; });
@@ -179,7 +186,7 @@ var REMOTE_CSS_URL = "";
 
     /* main (hero + tarjetas de carpetas) */
     var main='<main id="iw-main"><p class="eyebrow">Menú principal</p>'
-      + '<h1>Hola de nuevo 👋 ¿Qué necesitas hacer hoy?</h1>'
+      + '<h1>¿Qué necesitas hacer hoy?</h1>'
       + '<p class="lede">Accede a tu información y actividades de autoservicio: inscripciones, calificaciones, pagos y trámites, todo desde aquí.</p>'
       + '<h2 class="sect">Secciones <span class="c">'+nav.folders.length+'</span></h2><div id="iw-grid">';
     nav.folders.forEach(function(f,i){
@@ -269,8 +276,8 @@ var REMOTE_CSS_URL = "";
         + ic(iconFor(it.text)) + '<span>'+it.text+'</span></a>';
     }
 
-    var h='<div class="iw-brand"><div class="m">iT</div><div><b>ITSON</b><span>'
-      + (current?current.text:'Portal') + '</span></div>'
+    var h='<div class="iw-brand">'+logoImg()
+      + '<div class="iw-brandcap">CIA ITSON</div>'
       + '<button class="iw-themebtn" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button></div>';
     h+='<div class="iw-search">'+ic('<circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/>')
       + '<input id="iw-navq" placeholder="Buscar…" autocomplete="off"></div>';
@@ -318,7 +325,7 @@ var REMOTE_CSS_URL = "";
       var t=txt(a); if(t) links.push({t:t, el:a});
     });
 
-    var h='<div class="iw-tb-brand">Autoservicio</div><div class="iw-sp"></div>';
+    var h=logoImg('iw-tb-logo')+'<div class="iw-sp"></div>';
     var map={};
     links.forEach(function(it,i){ map[i]=it.el; h+='<a class="iw-tl" data-h="'+i+'">'+it.t+'</a>'; });
     h+='<button class="iw-tb-theme" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button>';
