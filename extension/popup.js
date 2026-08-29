@@ -10,6 +10,7 @@ function paintEnabled(v){
   st.textContent = v ? 'Activada' : 'Desactivada';
 }
 function paintTheme(v){
+  document.documentElement.setAttribute('data-theme', v === 'light' ? 'light' : 'dark');
   segBtns.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-theme') === v); });
 }
 
