@@ -304,9 +304,12 @@ html.itson-wrap .login-form {
   margin: 7vh auto !important;
   box-sizing: border-box !important;
 }
-/* colapsar el campo oculto (contraseña en la portada CIA) para no dejar hueco */
-html.itson-wrap .wrap-input:has(> input[style*="display: none"]),
-html.itson-wrap .wrap-input:has(> input[style*="display:none"]) { display: none !important; }
+/* colapsar el campo oculto (contraseña en la portada CIA) y los <br> de la plantilla */
+html.itson-wrap .wrap-input:has(input[style*="display: none"]),
+html.itson-wrap .wrap-input:has(input[style*="display:none"]),
+html.itson-wrap .wrap-input:has(input[name="passwordtrayectorias"]) { display: none !important; }
+html.itson-wrap .login-form br,
+html.itson-wrap .wrap-login br { display: none !important; }
 /* si el login-form va anidado dentro de wrap-login, evitar doble tarjeta */
 html.itson-wrap .wrap-login .login-form {
   background: transparent !important; border: none !important;
