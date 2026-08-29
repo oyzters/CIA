@@ -304,12 +304,23 @@ html.itson-wrap .login-form {
   margin: 7vh auto !important;
   box-sizing: border-box !important;
 }
-/* colapsar el campo oculto (contraseña en la portada CIA) y los <br> de la plantilla */
+/* colapsar SOLO el wrap del campo oculto (contraseña en la portada CIA) — sin tocar los <br> (el puente los usa para separar texto) */
 html.itson-wrap .wrap-input:has(input[style*="display: none"]),
 html.itson-wrap .wrap-input:has(input[style*="display:none"]),
 html.itson-wrap .wrap-input:has(input[name="passwordtrayectorias"]) { display: none !important; }
-html.itson-wrap .login-form br,
-html.itson-wrap .wrap-login br { display: none !important; }
+
+/* puente de advertencia (CIA.ASPX): darle aire al botón "Continuar" (no es login-form-btn) */
+html.itson-wrap .wrap-login button:not(.login-form-btn),
+html.itson-wrap .login-form button:not(.login-form-btn),
+html.itson-wrap .wrap-login input[type="submit"]:not(.login-form-btn),
+html.itson-wrap .login-form input[type="submit"]:not(.login-form-btn),
+html.itson-wrap .wrap-login a.btn, html.itson-wrap .login-form a.btn {
+  margin-top: 22px !important; display: inline-block !important;
+  background: var(--w-accent) !important; color: #fff !important;
+  border: none !important; border-radius: 12px !important; padding: 12px 28px !important;
+  font-weight: 600 !important; font-size: 14px !important; cursor: pointer !important;
+  box-shadow: 0 8px 20px -8px var(--w-accent) !important; text-decoration: none !important;
+}
 /* si el login-form va anidado dentro de wrap-login, evitar doble tarjeta */
 html.itson-wrap .wrap-login .login-form {
   background: transparent !important; border: none !important;
