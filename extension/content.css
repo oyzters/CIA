@@ -138,6 +138,82 @@ html.itson-wrap .PSLEVEL1GRIDEVENROW { background: #fafbfe !important; }
 html.itson-wrap .PSERROR,
 html.itson-wrap .PSWARNING { border-radius: 8px !important; padding: 10px 12px !important; }
 
+/* ============================================================
+   CASCARA DEL PORTAL (homepage clasica: header + pagelet "Menu")
+   Clases reales de PeopleTools: PTPAGELET, PTPAGELETHEADER,
+   PTPAGELETBODY, PTNAVBACKGROUND, PSNAVPARENTLINK, PTNAVLINK.
+   ============================================================ */
+
+/* fondo de la homepage + tipografia en <font> (el portal usa <font face=Arial>) */
+html.itson-wrap body.PSPAGE { background: var(--w-bg) !important; }
+html.itson-wrap font { font-family: var(--w-font) !important; }
+
+/* pagelet "Menu" -> tarjeta */
+html.itson-wrap table.PTPAGELET {
+  border: 1px solid var(--w-line) !important;
+  border-collapse: separate !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  box-shadow: var(--w-shadow) !important;
+  background: var(--w-card) !important;
+}
+html.itson-wrap .PTPAGELETHEADER {
+  background: linear-gradient(180deg, var(--w-accent), #2447c9) !important;
+  color: #fff !important;
+  font-family: var(--w-font) !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  padding: 11px 14px !important;
+  border: none !important;
+}
+html.itson-wrap .PTPAGELETBODY,
+html.itson-wrap .PTNAVBACKGROUND {
+  background: var(--w-card) !important;
+  border: none !important;
+}
+html.itson-wrap .PTPAGELETBODY { padding: 8px !important; }
+
+/* links del menu (carpetas PSNAVPARENTLINK y hojas PTNAVLINK) */
+html.itson-wrap a.PSNAVPARENTLINK,
+html.itson-wrap a.PTNAVLINK {
+  display: inline-block !important;
+  font-family: var(--w-font) !important;
+  font-weight: 500 !important;
+  font-size: 13.5px !important;
+  color: var(--w-ink) !important;
+  text-decoration: none !important;
+  padding: 6px 9px !important;
+  border-radius: 8px !important;
+  transition: background .12s, color .12s;
+}
+html.itson-wrap a.PSNAVPARENTLINK:hover,
+html.itson-wrap a.PTNAVLINK:hover {
+  background: rgba(47,91,234,.10) !important;
+  color: var(--w-accent) !important;
+}
+
+/* header superior: Inicio / Favoritos / Desconexion + Personalizar + Ayuda */
+html.itson-wrap a.headerLinkActive {
+  color: #fff !important;
+  font-family: var(--w-font) !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+}
+html.itson-wrap td.SMALL,
+html.itson-wrap a.SMALL,
+html.itson-wrap a.PSHYPERLINK { font-family: var(--w-font) !important; }
+
+/* buscador del menu */
+html.itson-wrap input[name="SEARCH_TEXT"] {
+  border: 1px solid var(--w-line) !important;
+  border-radius: 8px !important;
+  padding: 7px 10px !important;
+  background: #fff !important;
+  color: var(--w-ink) !important;
+  width: 190px !important;
+  outline: none !important;
+}
+
 /* boton flotante inyectado por content.js */
 #itson-wrap-fab {
   position: fixed; right: 16px; bottom: 16px; z-index: 2147483647;
