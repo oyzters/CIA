@@ -9,7 +9,7 @@
         "*://smartweb1.itson.edu.mx/*",
         "*://smartweb2.itson.edu.mx/*"
       ],
-      "css": ["content.css"],
+      "css": ["content.css", "shell.css"],
       "js": ["content.js"],
       "all_frames": true,
       "run_at": "document_end"
