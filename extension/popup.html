@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin:0; width:240px; font-family:'Segoe UI',system-ui,sans-serif; background:#fff; color:#1c2230; }
+  .hd { padding:14px 16px 6px; }
+  .hd h1 { margin:0; font-size:15px; font-weight:600; }
+  .hd p { margin:4px 0 0; font-size:12px; color:#5b6472; line-height:1.4; }
+  .row { padding:12px 16px 16px; }
+  #t {
+    width:100%; border:none; border-radius:10px; padding:11px; cursor:pointer;
+    font-size:13px; font-weight:600; color:#fff; background:#8a93a5; transition:background .12s;
+  }
+  #t[data-on="1"] { background:#2f5bea; }
+</style>
+</head>
+<body>
+  <div class="hd">
+    <h1>ITSON Wrap</h1>
+    <p>Interfaz limpia sobre el portal de ITSON. Corre en tu sesion.</p>
+  </div>
+  <div class="row">
+    <button id="t" type="button" data-on="1">Activado</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+/*
+ * ITSON Wrap - capa visual para PeopleSoft clasico (PeopleTools 8).
+ * Todas las reglas viven bajo html.itson-wrap: content.js pone o quita esa
+ * clase para activar/desactivar, sin recargar la pagina.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --w-bg: #eef1f6;
+  --w-card: #ffffff;
+  --w-ink: #1c2230;
+  --w-muted: #5b6472;
+  --w-line: #e3e7ee;
+  --w-accent: #2f5bea;
+  --w-radius: 12px;
+  --w-shadow: 0 1px 2px rgba(20,30,55,.06), 0 8px 24px rgba(20,30,55,.08);
+  --w-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* base tipografia / fondo */
+html.itson-wrap,
+html.itson-wrap body { background: var(--w-bg) !important; }
+
+html.itson-wrap, html.itson-wrap body,
+html.itson-wrap td, html.itson-wrap th,
+html.itson-wrap span, html.itson-wrap div, html.itson-wrap a, html.itson-wrap label,
+html.itson-wrap input, html.itson-wrap select, html.itson-wrap textarea, html.itson-wrap button {
+  font-family: var(--w-font) !important;
+  color: var(--w-ink);
+}
+html.itson-wrap body { -webkit-font-smoothing: antialiased; }
+
+/* contenedores clasicos -> tarjeta */
+html.itson-wrap table.PABACKGROUND,
+html.itson-wrap .PATRANSACTION,
+html.itson-wrap .PAGROUPBOX,
+html.itson-wrap .PSGROUPBOX,
+html.itson-wrap table[class*='GROUPBOX'] {
+  background: var(--w-card) !important;
+  border: 1px solid var(--w-line) !important;
+  border-radius: var(--w-radius) !important;
+  box-shadow: var(--w-shadow) !important;
+}
+
+/* titulos / encabezados */
+html.itson-wrap .PAPAGETITLE,
+html.itson-wrap .PATRANSACTIONTITLE,
+html.itson-wrap .PSGROUPBOXLABEL,
+html.itson-wrap .PAGROUPBOXLABEL,
+html.itson-wrap .PAGROUPDIVIDER {
+  color: var(--w-ink) !important;
+  font-weight: 600 !important;
+  letter-spacing: -.01em;
+}
+
+/* inputs */
+html.itson-wrap input.PSEDITBOX,
+html.itson-wrap input.PSEDITBOXFOCUS,
+html.itson-wrap textarea.PSLONGEDITBOX,
+html.itson-wrap select.PSDROPDOWNLIST,
+html.itson-wrap input[type='text'],
+html.itson-wrap input[type='password'],
+html.itson-wrap select,
+html.itson-wrap textarea {
+  border: 1px solid var(--w-line) !important;
+  border-radius: 8px !important;
+  padding: 7px 10px !important;
+  background: #fff !important;
+  color: var(--w-ink) !important;
+  outline: none !important;
+  transition: border-color .12s, box-shadow .12s;
+}
+html.itson-wrap input.PSEDITBOX:focus,
+html.itson-wrap textarea:focus,
+html.itson-wrap select:focus,
+html.itson-wrap input[type='text']:focus,
+html.itson-wrap input[type='password']:focus {
+  border-color: var(--w-accent) !important;
+  box-shadow: 0 0 0 3px rgba(47,91,234,.15) !important;
+}
+
+/* botones */
+html.itson-wrap input.PSPUSHBUTTON,
+html.itson-wrap input[type='button'],
+html.itson-wrap input[type='submit'],
+html.itson-wrap .SSSBUTTON_CONFIRMLINK,
+html.itson-wrap a.PSPUSHBUTTONTBLINK {
+  background: var(--w-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: filter .12s, transform .02s;
+}
+html.itson-wrap input.PSPUSHBUTTON:hover,
+html.itson-wrap input[type='submit']:hover { filter: brightness(1.06) !important; }
+html.itson-wrap input.PSPUSHBUTTON:active { transform: translateY(1px) !important; }
+
+/* links */
+html.itson-wrap a.PSHYPERLINK,
+html.itson-wrap a { color: var(--w-accent) !important; }
+html.itson-wrap a.PSHYPERLINK:hover { text-decoration: underline !important; }
+
+/* grids / tablas */
+html.itson-wrap table.PSLEVEL1GRID,
+html.itson-wrap table.PSLEVEL1GRIDWBO,
+html.itson-wrap table.PSLEVEL2GRID {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid var(--w-line) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  background: #fff !important;
+}
+html.itson-wrap th.PSLEVEL1GRIDCOLUMNHDR,
+html.itson-wrap .PSLEVEL1GRIDCOLUMNHDR,
+html.itson-wrap .PSLEVEL2GRIDCOLUMNHDR {
+  background: #f4f6fb !important;
+  color: var(--w-muted) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  letter-spacing: .04em !important;
+  padding: 8px 10px !important;
+  border-bottom: 1px solid var(--w-line) !important;
+}
+html.itson-wrap tr.PSLEVEL1GRIDODDROW td,
+html.itson-wrap tr.PSLEVEL1GRIDEVENROW td {
+  padding: 8px 10px !important;
+  border-bottom: 1px solid var(--w-line) !important;
+}
+html.itson-wrap .PSLEVEL1GRIDEVENROW { background: #fafbfe !important; }
+
+/* mensajes */
+html.itson-wrap .PSERROR,
+html.itson-wrap .PSWARNING { border-radius: 8px !important; padding: 10px 12px !important; }
+
+/* boton flotante inyectado por content.js */
+#itson-wrap-fab {
+  position: fixed; right: 16px; bottom: 16px; z-index: 2147483647;
+  font: 600 12px var(--w-font); padding: 8px 14px; border-radius: 999px;
+  border: none; cursor: pointer; color: #fff;
+  box-shadow: 0 4px 14px rgba(20,30,55,.25);
+}

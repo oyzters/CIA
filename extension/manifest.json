@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "ITSON Wrap",
+  "version": "0.1.0",
+  "description": "Interfaz limpia sobre el portal PeopleSoft de ITSON. Corre en tu propia sesion; no toca el servidor ni credenciales.",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://smartweb1.itson.edu.mx/*",
+        "*://smartweb2.itson.edu.mx/*"
+      ],
+      "css": ["content.css"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ITSON Wrap"
+  },
+  "permissions": ["storage"]
+}

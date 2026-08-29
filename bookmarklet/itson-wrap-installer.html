@@ -1,0 +1,257 @@
+<title>ITSON Wrap</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#f1f4fa; --card:#ffffff; --ink:#191f2e; --muted:#59627a;
+    --line:#e4e8f2; --line-strong:#d3d9e8;
+    --accent:#2f5bea; --accent-deep:#1e3aa8; --accent-soft:rgba(47,91,234,.10);
+    --ok:#0f9d63; --code-bg:#0d1222; --code-ink:#cfd7f2; --code-line:#232b46;
+    --shadow:0 1px 2px rgba(20,30,60,.05), 0 14px 40px rgba(20,30,60,.09);
+    --radius:16px;
+    --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0d1120; --card:#161c2c; --ink:#e9edf8; --muted:#98a2bb;
+      --line:#242c42; --line-strong:#313a55;
+      --accent:#7f99ff; --accent-deep:#a9bcff; --accent-soft:rgba(127,153,255,.13);
+      --ok:#4fd39a; --code-bg:#0a0e1c; --code-ink:#d3daf3; --code-line:#20283f;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 50px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1120; --card:#161c2c; --ink:#e9edf8; --muted:#98a2bb;
+    --line:#242c42; --line-strong:#313a55;
+    --accent:#7f99ff; --accent-deep:#a9bcff; --accent-soft:rgba(127,153,255,.13);
+    --ok:#4fd39a; --code-bg:#0a0e1c; --code-ink:#d3daf3; --code-line:#20283f;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 50px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); line-height:1.55;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding:48px 20px 72px;
+  }
+  .wrap{max-width:660px; margin:0 auto; display:flex; flex-direction:column; gap:26px}
+
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; font-weight:500;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:""; width:22px; height:1.5px; background:var(--accent)}
+
+  h1{
+    font-size:clamp(34px,7vw,50px); line-height:1.02; margin:0;
+    font-weight:700; letter-spacing:-.03em; text-wrap:balance;
+  }
+  .lede{font-size:17px; color:var(--muted); margin:0; max-width:52ch}
+  .lede b{color:var(--ink); font-weight:600}
+
+  .card{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:26px;
+  }
+
+  .drop{
+    display:flex; flex-direction:column; align-items:center; gap:16px;
+    text-align:center; padding:30px 26px;
+    background:
+      radial-gradient(120% 120% at 50% -10%, var(--accent-soft), transparent 60%),
+      var(--card);
+    border:1px solid var(--line);
+  }
+  .drop .hint{font-size:13.5px; color:var(--muted); margin:0}
+  .drop .hint kbd{
+    font-family:var(--mono); font-size:12px; background:var(--accent-soft);
+    color:var(--accent-deep); padding:1px 6px; border-radius:5px;
+  }
+
+  a.bm{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-weight:600; font-size:16px;
+    text-decoration:none; color:#fff;
+    background:linear-gradient(180deg,var(--accent),var(--accent-deep));
+    padding:14px 26px; border-radius:12px;
+    box-shadow:0 6px 18px -4px var(--accent);
+    cursor:grab; user-select:none;
+    transition:transform .14s ease, box-shadow .14s ease, filter .14s ease;
+  }
+  a.bm:hover{transform:translateY(-2px); box-shadow:0 12px 26px -6px var(--accent); filter:brightness(1.04)}
+  a.bm:active{cursor:grabbing; transform:translateY(0)}
+  a.bm .grip{font-size:18px; opacity:.85}
+
+  .steps{display:flex; flex-direction:column; gap:0; counter-reset:s; padding:0; margin:0; list-style:none}
+  .steps li{
+    counter-increment:s; display:grid; grid-template-columns:34px 1fr;
+    gap:14px; align-items:start; padding:14px 0;
+    border-top:1px solid var(--line);
+  }
+  .steps li:first-child{border-top:none}
+  .steps li::before{
+    content:counter(s,decimal-leading-zero);
+    font-family:var(--mono); font-size:13px; font-weight:600; color:var(--accent);
+    background:var(--accent-soft); border-radius:8px;
+    width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+  }
+  .steps h3{margin:0 0 2px; font-size:15px; font-weight:600}
+  .steps p{margin:0; font-size:14px; color:var(--muted)}
+
+  .section-label{
+    font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 12px;
+  }
+
+  .code{
+    position:relative; background:var(--code-bg); border:1px solid var(--code-line);
+    border-radius:12px; overflow:hidden;
+  }
+  .code pre{
+    margin:0; padding:16px 16px 18px; overflow-x:auto;
+    font-family:var(--mono); font-size:12px; line-height:1.6; color:var(--code-ink);
+    white-space:pre-wrap; word-break:break-all;
+  }
+  .copy{
+    position:absolute; top:10px; right:10px;
+    font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.04em;
+    color:var(--code-ink); background:rgba(255,255,255,.07);
+    border:1px solid var(--code-line); border-radius:7px;
+    padding:5px 10px; cursor:pointer; transition:background .12s, color .12s;
+  }
+  .copy:hover{background:rgba(255,255,255,.14)}
+  .copy.done{color:#0d1222; background:var(--ok); border-color:var(--ok)}
+
+  .note{
+    display:flex; gap:13px; align-items:flex-start;
+    background:var(--card); border:1px solid var(--line); border-left:3px solid var(--ok);
+    border-radius:12px; padding:16px 18px;
+  }
+  .note .ic{color:var(--ok); flex:0 0 auto; margin-top:1px}
+  .note p{margin:0; font-size:13.5px; color:var(--muted)}
+  .note b{color:var(--ink); font-weight:600}
+
+  .alt{font-size:13.5px; color:var(--muted); margin:0}
+  .alt a{color:var(--accent); font-weight:500}
+
+  footer{
+    border-top:1px solid var(--line); padding-top:18px; margin-top:4px;
+    font-size:12px; color:var(--muted); font-family:var(--mono);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header style="display:flex;flex-direction:column;gap:14px">
+    <span class="eyebrow">Bookmarklet · Capa visual</span>
+    <h1>ITSON&nbsp;Wrap</h1>
+    <p class="lede">Le pone una interfaz limpia al portal <b>PeopleSoft</b> de ITSON.
+      Corre dentro de <b>tu propia sesión</b> ya iniciada — no pasa por ningún servidor,
+      no toca tu contraseña, no cambia nada en ITSON.</p>
+  </header>
+
+  <div class="card drop">
+    <a id="bm" class="bm" href="#" title="Arrástrame a tu barra de marcadores"
+       onclick="return false"><span class="grip">↦</span> ITSON Wrap</a>
+    <p class="hint">Arrastra este botón hasta tu <kbd>barra de marcadores</kbd>.
+      Luego, ya dentro del portal, haz clic en el marcador para activar la capa.</p>
+  </div>
+
+  <ol class="steps card">
+    <li>
+      <div>
+        <h3>Guarda el marcador</h3>
+        <p>Arrastra el botón azul a tu barra de marcadores. Si no puedes arrastrar, usa el código de abajo.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h3>Entra a ITSON como siempre</h3>
+        <p>Inicia sesión con tu cuenta en el portal. El marcador no pide ni guarda credenciales.</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h3>Haz clic en el marcador</h3>
+        <p>Se aplica la interfaz limpia. Vuelve a hacer clic para quitarla. Repite en cada visita.</p>
+      </div>
+    </li>
+  </ol>
+
+  <div>
+    <p class="section-label">Alternativa — crear el marcador a mano</p>
+    <div class="code">
+      <button class="copy" id="copyBtn" type="button">Copiar</button>
+      <pre id="bmCode">Generando…</pre>
+    </div>
+    <p class="alt" style="margin-top:10px">Crea un marcador nuevo, en el campo <b>URL</b> pega este código y guárdalo.</p>
+  </div>
+
+  <div class="note">
+    <svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+    <p><b>Por qué esto es seguro:</b> el marcador solo re-estiliza la página que ya tienes abierta,
+      en tu navegador. Cada persona se conecta directo a ITSON con su cuenta —
+      nada de un login compartido ni un servidor intermedio que vea contraseñas ajenas.</p>
+  </div>
+
+  <p class="alt">¿Lo quieres permanente (sin volver a hacer clic) o repartirlo a un equipo?
+    Se puede empaquetar como <b>userscript</b> (Tampermonkey) o publicar como
+    <b>extensión</b> de Chrome/Firefox — misma lógica, se activa sola en cada sesión.</p>
+
+  <footer>
+    <span>ITSON Wrap · v0.1</span>
+    <span>corre local · sin credenciales</span>
+  </footer>
+</div>
+
+<script>
+  // CSS que inyecta el bookmarklet en la pagina de PeopleSoft (subset del userscript).
+  var BM_CSS = "@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');"
+    + "html.itson-wrap,html.itson-wrap body{background:#eef1f6!important}"
+    + "html.itson-wrap,html.itson-wrap body,html.itson-wrap td,html.itson-wrap th,html.itson-wrap span,html.itson-wrap div,html.itson-wrap a,html.itson-wrap label,html.itson-wrap input,html.itson-wrap select,html.itson-wrap textarea,html.itson-wrap button{font-family:'Inter',system-ui,'Segoe UI',Roboto,Arial,sans-serif!important;color:#1c2230}"
+    + "html.itson-wrap table.PABACKGROUND,html.itson-wrap .PAGROUPBOX,html.itson-wrap .PSGROUPBOX,html.itson-wrap table[class*='GROUPBOX']{background:#fff!important;border:1px solid #e3e7ee!important;border-radius:12px!important;box-shadow:0 1px 2px rgba(20,30,55,.06),0 8px 24px rgba(20,30,55,.08)!important}"
+    + "html.itson-wrap .PAPAGETITLE,html.itson-wrap .PATRANSACTIONTITLE,html.itson-wrap .PSGROUPBOXLABEL,html.itson-wrap .PAGROUPBOXLABEL{color:#1c2230!important;font-weight:600!important}"
+    + "html.itson-wrap input.PSEDITBOX,html.itson-wrap textarea.PSLONGEDITBOX,html.itson-wrap select.PSDROPDOWNLIST,html.itson-wrap input[type='text'],html.itson-wrap input[type='password'],html.itson-wrap select,html.itson-wrap textarea{border:1px solid #e3e7ee!important;border-radius:8px!important;padding:7px 10px!important;background:#fff!important;color:#1c2230!important;outline:none!important}"
+    + "html.itson-wrap input.PSEDITBOX:focus,html.itson-wrap textarea:focus,html.itson-wrap select:focus,html.itson-wrap input[type='text']:focus,html.itson-wrap input[type='password']:focus{border-color:#2f5bea!important;box-shadow:0 0 0 3px rgba(47,91,234,.15)!important}"
+    + "html.itson-wrap input.PSPUSHBUTTON,html.itson-wrap input[type='button'],html.itson-wrap input[type='submit'],html.itson-wrap a.PSPUSHBUTTONTBLINK{background:#2f5bea!important;color:#fff!important;border:none!important;border-radius:8px!important;padding:8px 16px!important;font-weight:600!important;cursor:pointer!important}"
+    + "html.itson-wrap a.PSHYPERLINK,html.itson-wrap a{color:#2f5bea!important}"
+    + "html.itson-wrap table.PSLEVEL1GRID,html.itson-wrap table.PSLEVEL2GRID{border-collapse:separate!important;border-spacing:0!important;border:1px solid #e3e7ee!important;border-radius:10px!important;overflow:hidden!important;background:#fff!important}"
+    + "html.itson-wrap th.PSLEVEL1GRIDCOLUMNHDR,html.itson-wrap .PSLEVEL1GRIDCOLUMNHDR{background:#f4f6fb!important;color:#5b6472!important;font-weight:600!important;text-transform:uppercase!important;font-size:11px!important;letter-spacing:.04em!important;padding:8px 10px!important;border-bottom:1px solid #e3e7ee!important}"
+    + "html.itson-wrap .PSLEVEL1GRIDEVENROW{background:#fafbfe!important}";
+
+  // Construye el bookmarklet: inyecta el estilo en el documento y en los iframes del mismo origen, y alterna la clase.
+  function buildBookmarklet(css){
+    var body = "(function(){var I='itson-wrap-style';var C=" + JSON.stringify(css) + ";"
+      + "function j(d){try{if(!d.getElementById(I)){var s=d.createElement('style');s.id=I;s.textContent=C;(d.head||d.documentElement).appendChild(s);}d.documentElement.classList.toggle('itson-wrap');}catch(e){}}"
+      + "j(document);var f=document.getElementsByTagName('iframe');for(var i=0;i<f.length;i++){try{if(f[i].contentDocument)j(f[i].contentDocument);}catch(e){}}})();";
+    return "javascript:" + encodeURIComponent(body);
+  }
+
+  var HREF = buildBookmarklet(BM_CSS);
+  document.getElementById('bm').setAttribute('href', HREF);
+  document.getElementById('bmCode').textContent = HREF;
+
+  var btn = document.getElementById('copyBtn');
+  btn.addEventListener('click', function(){
+    var done = function(){ btn.textContent='Copiado ✓'; btn.classList.add('done'); setTimeout(function(){btn.textContent='Copiar'; btn.classList.remove('done');},1600); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(HREF).then(done, fallback);
+    } else { fallback(); }
+    function fallback(){
+      var r=document.createRange(); r.selectNodeContents(document.getElementById('bmCode'));
+      var sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      try{ document.execCommand('copy'); done(); }catch(e){}
+    }
+  });
+</script>
