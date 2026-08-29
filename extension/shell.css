@@ -102,7 +102,8 @@ html.iw-shell #MENU + br{ display:none!important; }
 #iw-grid a.card:hover .arrow{ transform:translate(2px,-2px); color:var(--iw-brand2); }
 
 /* ===== Sidebar reconstruido dentro del frame NAV (buildNavSidebar) ===== */
-html.iw-nav-built .PTPAGELET { display:none !important; }          /* ocultar arbol nativo */
+/* ocultar TODO lo nativo del frame NAV salvo nuestro sidebar (a prueba de re-render) */
+html.iw-nav-built body > *:not(#iw-navwrap) { display:none !important; }
 html.iw-nav.itson-wrap #iw-navwrap { font-family:var(--iw-ui); padding:10px 8px 24px; }
 #iw-navwrap .iw-brand { display:flex; align-items:center; gap:10px; padding:6px 8px 12px; }
 #iw-navwrap .iw-themebtn { margin-left:auto; background:var(--iw-surface2); border:1px solid var(--iw-line);
@@ -126,6 +127,22 @@ html.iw-nav.itson-wrap #iw-navwrap { font-family:var(--iw-ui); padding:10px 8px 
 #iw-navwrap a.iw-item:hover { background:var(--iw-surface2); color:var(--iw-ink); }
 #iw-navwrap a.iw-item.on { background:var(--iw-soft); color:var(--iw-brand2); font-weight:600; }
 #iw-navwrap a.iw-item.on svg { opacity:1; }
+
+/* ===== Topbar reconstruido dentro del frame UniversalHeader (buildHeaderBar) ===== */
+html.iw-hdr-built body > *:not(#iw-topbar) { display:none !important; }
+html.iw-hdr.itson-wrap, html.iw-hdr.itson-wrap body { background:var(--iw-surface) !important; margin:0 !important; overflow:hidden !important; }
+#iw-topbar { display:flex; align-items:center; gap:12px; height:56px; padding:0 22px;
+  font-family:var(--iw-ui); background:var(--iw-surface); }
+#iw-topbar .iw-tb-brand { font-weight:600; font-size:14px; color:var(--iw-ink); }
+#iw-topbar .iw-sp { flex:1; }
+#iw-topbar a.iw-tl { color:var(--iw-ink2); font-size:13px; font-weight:500; text-decoration:none;
+  padding:8px 12px; border-radius:9px; cursor:pointer; white-space:nowrap; }
+#iw-topbar a.iw-tl:hover { background:var(--iw-surface2); color:var(--iw-ink); }
+#iw-topbar .iw-tb-theme { background:var(--iw-surface2); border:1px solid var(--iw-line);
+  width:34px; height:34px; border-radius:9px; color:var(--iw-ink2); cursor:pointer;
+  display:grid; place-items:center; flex:0 0 auto; }
+#iw-topbar .iw-tb-theme svg { width:16px; height:16px; }
+#iw-topbar .iw-tb-theme:hover { color:var(--iw-ink); }
 
 @media (max-width:820px){
   html.iw-shell body{ padding-left:0!important; }

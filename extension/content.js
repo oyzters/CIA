@@ -216,11 +216,9 @@ var REMOTE_CSS_URL = "";
   function buildNavSidebar(){
     if(frameName()!=='NAV' || !enabled) return;
     var sig = navSignature();
-    var existing = document.getElementById('iw-navwrap');
-    if(existing){
-      if(existing.getAttribute('data-sig') === sig) return;  // misma seccion: nada que hacer
-      existing.remove();                                     // cambio de seccion: reconstruir
-    }
+    var existings = document.querySelectorAll('#iw-navwrap');
+    if(existings.length === 1 && existings[0].getAttribute('data-sig') === sig) return; // misma seccion: nada
+    existings.forEach(function(e){ e.remove(); });          // limpiar cualquier duplicado antes de reconstruir
 
     var anchors = document.querySelectorAll('a.PTNAVSELPARENTLINK, a.PSNAVPARENTLINK, a.PTNAVLINK');
     var items=[], seen={};
@@ -280,8 +278,40 @@ var REMOTE_CSS_URL = "";
   }
 
   function removeNavSidebar(){
-    var w=document.getElementById('iw-navwrap'); if(w) w.remove();
+    document.querySelectorAll('#iw-navwrap').forEach(function(w){ w.remove(); });
     document.documentElement.classList.remove('iw-nav-built');
+  }
+
+  /* ---------- TOPBAR del frame UniversalHeader (paginas de seccion) ---------- */
+  function buildHeaderBar(){
+    if(frameName()!=='UniversalHeader' || !enabled) return;
+    if(document.getElementById('iw-topbar')) return;
+
+    var links=[];
+    document.querySelectorAll('a.headerLinkActive').forEach(function(a){
+      var t=txt(a); if(t) links.push({t:t, el:a});
+    });
+
+    var h='<div class="iw-tb-brand">Autoservicio</div><div class="iw-sp"></div>';
+    var map={};
+    links.forEach(function(it,i){ map[i]=it.el; h+='<a class="iw-tl" data-h="'+i+'">'+it.t+'</a>'; });
+    h+='<button class="iw-tb-theme" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button>';
+
+    var bar=document.createElement('div'); bar.id='iw-topbar'; bar.innerHTML=h;
+    document.body.appendChild(bar);
+
+    bar.querySelectorAll('[data-h]').forEach(function(n){
+      var o=map[n.getAttribute('data-h')]; if(o) n.addEventListener('click', relay(o));
+    });
+    bar.querySelectorAll('[data-theme-toggle]').forEach(function(b){
+      b.addEventListener('click', function(){ setTheme(theme==='dark'?'light':'dark'); });
+    });
+
+    document.documentElement.classList.add('iw-hdr-built');
+  }
+  function removeHeaderBar(){
+    document.querySelectorAll('#iw-topbar').forEach(function(b){ b.remove(); });
+    document.documentElement.classList.remove('iw-hdr-built');
   }
 
   /* ---------- estado ---------- */
@@ -291,8 +321,8 @@ var REMOTE_CSS_URL = "";
     applyTheme();
     applyRoles();
     tuneFrameset();
-    if(enabled){ buildShell(); buildNavSidebar(); }
-    else { removeShell(); removeNavSidebar(); }
+    if(enabled){ buildShell(); buildNavSidebar(); buildHeaderBar(); }
+    else { removeShell(); removeNavSidebar(); removeHeaderBar(); }
   }
 
   function paintFab(){ var f=document.getElementById('itson-wrap-fab'); if(f){ f.textContent=enabled?'Wrap ON':'Wrap OFF'; f.style.background=enabled?'#2f5bea':'#8a93a5'; } }
@@ -333,6 +363,7 @@ var REMOTE_CSS_URL = "";
       else hideOriginals();   // re-ocultar lo que un postback haya re-dibujado
     }
     if(enabled && frameName()==='NAV') buildNavSidebar();  // se auto-protege por firma
+    if(enabled && frameName()==='UniversalHeader') buildHeaderBar();
     if(document.querySelector('frameset') && document.getElementById('iw-shell')) removeShell(); // nunca el shell fijo sobre un frameset
   });
   try{ mo.observe(document.documentElement, { childList:true, subtree:true }); }catch(e){}
