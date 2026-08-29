@@ -14,11 +14,11 @@
   --iw-ui:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
 }
 html.iw-dark{
-  --iw-bg:#080c17; --iw-surface:#111a2d; --iw-surface2:#0e1526;
-  --iw-ink:#e9eef9; --iw-ink2:#c2cbe0; --iw-muted:#8d9ab8;
-  --iw-line:#202b45; --iw-line2:#2a3757;
-  --iw-brand:#6f8dff; --iw-brand2:#93aaff; --iw-soft:rgba(111,141,255,.14);
-  --iw-shadow:0 2px 6px rgba(0,0,0,.35), 0 20px 50px -14px rgba(0,0,0,.6);
+  --iw-bg:#0c0d10; --iw-surface:#16181d; --iw-surface2:#1e2126;
+  --iw-ink:#f3f5f8; --iw-ink2:#c6ccd6; --iw-muted:#8b929e;
+  --iw-line:#262a30; --iw-line2:#343a42;
+  --iw-brand:#5b9dff; --iw-brand2:#8bbaff; --iw-soft:rgba(91,157,255,.13);
+  --iw-shadow:0 2px 6px rgba(0,0,0,.4), 0 20px 50px -14px rgba(0,0,0,.65);
 }
 
 /* ocultar el layout viejo y reservar espacio para la cascara */
@@ -37,9 +37,9 @@ html.iw-shell #MENU + br{ display:none!important; }
   background:var(--iw-surface); border-right:1px solid var(--iw-line);
   display:flex; flex-direction:column; font-family:var(--iw-ui);
 }
-#iw-brand{ display:flex; flex-direction:column; align-items:flex-start; gap:9px; padding:20px 20px 16px; border-bottom:1px solid var(--iw-line); }
-#iw-brand .iw-logo{ height:34px; width:auto; display:block; }
-#iw-brand .iw-brandcap{ font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--iw-muted); }
+#iw-brand{ display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:20px 20px 16px; border-bottom:1px solid var(--iw-line); }
+#iw-brand b{ font-size:16px; font-weight:700; letter-spacing:-.01em; color:var(--iw-ink); line-height:1.1; }
+#iw-brand span{ font-size:11.5px; color:var(--iw-muted); }
 #iw-nav{ padding:12px 10px; overflow-y:auto; flex:1; }
 #iw-nav .g{ font-size:10.5px; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--iw-muted); padding:14px 12px 6px; }
 #iw-nav a{ display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:9px;
@@ -102,9 +102,9 @@ html.iw-shell #MENU + br{ display:none!important; }
 /* ocultar TODO lo nativo del frame NAV salvo nuestro sidebar (a prueba de re-render) */
 html.iw-nav-built body > *:not(#iw-navwrap) { display:none !important; }
 html.iw-nav.itson-wrap #iw-navwrap { font-family:var(--iw-ui); padding:10px 8px 24px; }
-#iw-navwrap .iw-brand { position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:7px; padding:12px 10px 14px; margin-bottom:2px; border-bottom:1px solid var(--iw-line); }
-#iw-navwrap .iw-logo { height:30px; width:auto; display:block; }
-#iw-navwrap .iw-brandcap { font-size:9.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--iw-muted); }
+#iw-navwrap .iw-brand { position:relative; display:flex; align-items:center; padding:12px 10px 14px; margin-bottom:2px; border-bottom:1px solid var(--iw-line); }
+#iw-navwrap .iw-brandtxt b { display:block; font-size:15px; font-weight:700; letter-spacing:-.01em; color:var(--iw-ink); line-height:1.15; }
+#iw-navwrap .iw-brandtxt span { font-size:11px; color:var(--iw-muted); }
 #iw-navwrap .iw-themebtn { position:absolute; top:10px; right:8px; background:var(--iw-surface2); border:1px solid var(--iw-line);
   width:30px; height:30px; border-radius:9px; color:var(--iw-ink2); cursor:pointer; display:grid; place-items:center; }
 #iw-navwrap .iw-themebtn svg { width:15px; height:15px; }

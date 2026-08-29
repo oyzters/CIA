@@ -161,8 +161,7 @@ var REMOTE_CSS_URL = "";
     var shell=document.createElement('div'); shell.id='iw-shell';
 
     /* sidebar */
-    var side='<aside id="iw-side"><div id="iw-brand">'+logoImg()
-      + '<div class="iw-brandcap">CIA ITSON</div></div><nav id="iw-nav">';
+    var side='<aside id="iw-side"><div id="iw-brand"><b>CIA ITSON</b><span>Autoservicio</span></div><nav id="iw-nav">';
     if(nav.folders.length){
       side+='<div class="g">Menú principal</div>';
       nav.folders.forEach(function(f,i){ side+='<a data-k="f'+i+'"'+(i===0?' class="on"':'')+'>'+ic(iconFor(f.text))+'<span>'+f.text+'</span></a>'; });
@@ -276,8 +275,8 @@ var REMOTE_CSS_URL = "";
         + ic(iconFor(it.text)) + '<span>'+it.text+'</span></a>';
     }
 
-    var h='<div class="iw-brand">'+logoImg()
-      + '<div class="iw-brandcap">CIA ITSON</div>'
+    var h='<div class="iw-brand"><div class="iw-brandtxt"><b>CIA ITSON</b><span>'
+      + (current?current.text:'Portal') + '</span></div>'
       + '<button class="iw-themebtn" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button></div>';
     h+='<div class="iw-search">'+ic('<circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/>')
       + '<input id="iw-navq" placeholder="Buscar…" autocomplete="off"></div>';
@@ -325,7 +324,7 @@ var REMOTE_CSS_URL = "";
       var t=txt(a); if(t) links.push({t:t, el:a});
     });
 
-    var h=logoImg('iw-tb-logo')+'<div class="iw-sp"></div>';
+    var h='<div class="iw-sp"></div>';   // topbar sin marca (la marca vive en el sidebar)
     var map={};
     links.forEach(function(it,i){ map[i]=it.el; h+='<a class="iw-tl" data-h="'+i+'">'+it.t+'</a>'; });
     h+='<button class="iw-tb-theme" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button>';

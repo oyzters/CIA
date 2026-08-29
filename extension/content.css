@@ -20,14 +20,14 @@
 
 /* modo oscuro (paleta del mockup) — aplica a reskin + shell en todos los frames */
 html.iw-dark {
-  --w-bg: #0d1120;
-  --w-card: #161c2c;
-  --w-surface2: #0e1526;
-  --w-ink: #e9edf8;
-  --w-muted: #98a2bb;
-  --w-line: #242c42;
-  --w-accent: #6f8dff;
-  --w-shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 30px rgba(0,0,0,.5);
+  --w-bg: #0c0d10;
+  --w-card: #16181d;
+  --w-surface2: #1e2126;
+  --w-ink: #f3f5f8;
+  --w-muted: #8b929e;
+  --w-line: #262a30;
+  --w-accent: #5b9dff;
+  --w-shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 30px rgba(0,0,0,.55);
 }
 
 /* base tipografia / fondo */
