@@ -38,16 +38,32 @@ var REMOTE_CSS_URL = "";
   /* ---------- iconos ---------- */
   function ic(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
   var ICON = {
-    home:'<path d="M3 9.5 12 3l9 6.5V21H3z"/><path d="M9 21v-7h6v7"/>',
-    self:'<path d="M12 3 2 8l10 5 8-4"/><path d="M6 11v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/>',
-    community:'<circle cx="9" cy="8" r="3"/><path d="M15 11a3 3 0 100-6"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><path d="M17 15c2.5 0 4 1.7 4 4"/>',
-    gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 13a7.6 7.6 0 000-2l2-1.5-2-3.4-2.3 1a7 7 0 00-1.7-1L14.8 3H9.2L8.6 5.1a7 7 0 00-1.7 1l-2.3-1-2 3.4L4.6 11a7.6 7.6 0 000 2l-2 1.5 2 3.4 2.3-1a7 7 0 001.7 1l.6 2.1h5.6l.6-2.1a7 7 0 001.7-1l2.3 1 2-3.4z"/>',
-    report:'<path d="M4 4h13l3 3v13H4z"/><path d="M8 13h8M8 17h5M8 9h5"/>',
-    tools:'<path d="M14 7a4 4 0 01-5 5L4 17l3 3 5-5a4 4 0 005-5l-3 3-2-2z"/>',
-    lock:'<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>',
+    student:'<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-5"/>',
+    home:'<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.6V21h14V9.6"/><path d="M9.5 21v-6h5v6"/>',
+    calendar:'<rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="m8.5 14.5 2.3 2.3 4.5-4.8"/>',
+    clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5l3.4 2"/>',
+    wallet:'<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18v3"/><rect x="3" y="7.5" width="18" height="13" rx="2.5"/><circle cx="17" cy="14" r="1.5"/>',
+    receipt:'<path d="M5 3h14v18l-2.5-1.5L14 21l-2-1.5L10 21l-2.5-1.5L5 21z"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+    idcard:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.3"/><path d="M5.3 16c.7-1.7 5-1.7 5.7 0"/><path d="M14 9.5h4M14 12.5h4M14 15.5h2.5"/>',
+    mapPin:'<path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>',
+    award:'<circle cx="12" cy="9" r="5"/><path d="M8.5 13.4 7 22l5-3 5 3-1.5-8.6"/>',
+    clipboard:'<rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4.5V3.5h6v1"/><path d="M9 11h6M9 15h4"/>',
+    trending:'<path d="M3 16.5 9 10l4 3.5L21 5.5"/><path d="M15.5 5.5H21v5.5"/>',
+    compare:'<path d="M8 4 4 8l4 4"/><path d="M4 8h13"/><path d="m16 20 4-4-4-4"/><path d="M20 16H7"/>',
+    admission:'<circle cx="9" cy="8" r="3.4"/><path d="M3.5 20c.5-3.3 3.6-5.4 5.5-5.4"/><path d="M17.5 8.5v6M14.5 11.5h6"/>',
+    docs:'<path d="M8 3h7l5 5v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h5"/><path d="M9.5 13.5h6M9.5 16.5h4"/>',
+    shieldHeart:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="M12 15s-3-1.9-3-3.9a1.7 1.7 0 0 1 3-1.1 1.7 1.7 0 0 1 3 1.1c0 2-3 3.9-3 3.9z"/>',
+    shieldCheck:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.4 2.4 4.6-5"/>',
+    userX:'<circle cx="9" cy="8" r="3.4"/><path d="M3.5 20c.5-3.3 3.6-5.4 5.5-5.4"/><path d="m15.5 10 5 5M20.5 10l-5 5"/>',
+    repeat:'<path d="M17 2.5 21 6l-4 3.5"/><path d="M3 11.5v-1a4 4 0 0 1 4-4h14"/><path d="M7 21.5 3 18l4-3.5"/><path d="M21 12.5v1a4 4 0 0 1-4 4H3"/>',
+    community:'<circle cx="9" cy="8" r="3.2"/><path d="M15 5.2a3.2 3.2 0 0 1 0 5.6"/><path d="M3 20c0-3.2 2.7-5 6-5s6 1.8 6 5"/><path d="M17 15.2c2.4 0 4 1.6 4 4.8"/>',
+    sliders:'<circle cx="8" cy="6.5" r="2"/><path d="M4 6.5h2M10 6.5h10"/><circle cx="15" cy="12" r="2"/><path d="M4 12h9M17 12h3"/><circle cx="9" cy="17.5" r="2"/><path d="M4 17.5h3M11 17.5h9"/>',
+    bars:'<path d="M4 21V11M9.3 21V4M14.6 21v-7M20 21V8"/><path d="M3 21h18"/>',
+    wrench:'<path d="M14.6 6.4a4 4 0 0 1-5.2 5.2L4 17l3 3 5.4-5.4a4 4 0 0 0 5.2-5.2l-2.4 2.4-2.6-.6-.6-2.6z"/>',
+    lock:'<rect x="4" y="10" width="16" height="10.5" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2.5"/>',
     user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/>',
-    book:'<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 19a2 2 0 012-2h13"/>',
-    folder:'<path d="M3 7h6l2 2h10v11H3z"/>'
+    book:'<path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v17H7.5A2.5 2.5 0 0 0 5 21.5z"/><path d="M5 21.5A2.5 2.5 0 0 1 7.5 19H19"/>',
+    folder:'<path d="M4 6h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>'
   };
   // color por categoría (energía tipo dashboard, duotono suave sobre oscuro)
   function colorFor(name){
@@ -69,15 +85,39 @@ var REMOTE_CSS_URL = "";
   }
   function iconFor(name){
     var t=(name||'').toLowerCase();
-    if(t.indexOf('autoservicio')>=0) return ICON.self;
-    if(t.indexOf('comunidad')>=0) return ICON.community;
-    if(t.indexOf('sacr')>=0||t.indexOf('definici')>=0) return ICON.gear;
-    if(t.indexOf('informe')>=0) return ICON.report;
-    if(t.indexOf('peopletools')>=0) return ICON.tools;
-    if(t.indexOf('contrase')>=0) return ICON.lock;
-    if(t.indexOf('personaliza')>=0) return ICON.gear;
-    if(t.indexOf('perfil')>=0) return ICON.user;
-    if(t.indexOf('diccionario')>=0) return ICON.book;
+    // sub-ítems específicos primero (para que los accesos rápidos no repitan íconos)
+    if(/horario/.test(t)) return ICON.clock;
+    if(/cita|calendario/.test(t)) return ICON.calendar;
+    if(/ficha|recibo|pago web/.test(t)) return ICON.receipt;
+    if(/cuenta|adeudo/.test(t)) return ICON.wallet;
+    if(/calific|boleta/.test(t)) return ICON.award;
+    if(/direccion/.test(t)) return ICON.mapPin;
+    if(/tel[ée]fono/.test(t)) return ICON.idcard;
+    if(/reporte|progreso/.test(t)) return ICON.trending;
+    if(/situaci[óo]n|expediente|actividad|petici[óo]n/.test(t)) return ICON.clipboard;
+    // secciones
+    if(/autoservicio/.test(t)) return ICON.student;
+    if(/inscrip/.test(t)) return ICON.calendar;
+    if(/finanz/.test(t)) return ICON.wallet;
+    if(/datos|personal|nombre/.test(t)) return ICON.idcard;
+    if(/registro|acad[ée]mic/.test(t)) return ICON.award;
+    if(/gradua/.test(t)) return ICON.trending;
+    if(/convalida/.test(t)) return ICON.compare;
+    if(/admisi/.test(t)) return ICON.admission;
+    if(/tr[áa]mite|ex[áa]men/.test(t)) return ICON.docs;
+    if(/facultativo/.test(t)) return ICON.shieldHeart;
+    if(/seguro|accidente/.test(t)) return ICON.shieldCheck;
+    if(/alumnado|centro de alum/.test(t)) return ICON.home;
+    if(/baja|tutor/.test(t)) return ICON.userX;
+    if(/programa|revalida/.test(t)) return ICON.repeat;
+    if(/comunidad/.test(t)) return ICON.community;
+    if(/sacr|definici|instalaci/.test(t)) return ICON.sliders;
+    if(/informe/.test(t)) return ICON.bars;
+    if(/peopletools/.test(t)) return ICON.wrench;
+    if(/contrase/.test(t)) return ICON.lock;
+    if(/personaliza/.test(t)) return ICON.sliders;
+    if(/perfil/.test(t)) return ICON.user;
+    if(/diccionario/.test(t)) return ICON.book;
     return ICON.folder;
   }
 
@@ -421,9 +461,9 @@ var REMOTE_CSS_URL = "";
       if(isFolder){
         var fk=null, kk=td.querySelectorAll('a.EOPP_SCCHILDCONTENTLINK');
         for(var qi=0; qi<kk.length; qi++){ if(txt(kk[qi])){ fk=kk[qi]; break; } }
-        if(fk) quick.push({ t:txt(fk), href:fk.href, c:col, ic:iconHtml });
+        if(fk) quick.push({ t:txt(fk), href:fk.href, c:col, ic:ic(iconFor(txt(fk))) });
       } else {
-        quick.push({ t:title, href:head.href, c:col, ic:iconHtml });
+        quick.push({ t:title, href:head.href, c:col, ic:ic(iconFor(title)) });
       }
       cardsHtml+='<div class="card" style="--c:'+col[0]+';--cs:'+col[1]+'">'
         + '<div class="top" data-h="'+esc(head.href)+'" data-f="'+(isFolder?'1':'0')+'">'
