@@ -219,7 +219,7 @@ var REMOTE_CSS_URL = "";
     var shell=document.createElement('div'); shell.id='iw-shell';
 
     /* sidebar */
-    var side='<aside id="iw-side"><div id="iw-brand">'+brandBadge()+'<div class="iw-bt"><b>CIA ITSON</b><span>Autoservicio</span></div></div><nav id="iw-nav">';
+    var side='<aside id="iw-side"><div id="iw-brand">'+brandBadge()+'<div class="iw-bt"><b>ITSON CIA Wrap</b><span>Autoservicio</span></div></div><nav id="iw-nav">';
     if(nav.folders.length){
       side+='<div class="g">Menú principal</div>';
       nav.folders.forEach(function(f,i){ var col=colorFor(f.text); side+='<a data-k="f'+i+'" style="--c:'+col[0]+'"><span class="iw-ico">'+ic(iconFor(f.text))+'</span><span>'+f.text+'</span></a>'; });
@@ -335,7 +335,7 @@ var REMOTE_CSS_URL = "";
         + '<span class="iw-ico">'+ic(iconFor(it.text))+'</span><span>'+it.text+'</span></a>';
     }
 
-    var h='<div class="iw-brand">'+brandBadge()+'<div class="iw-brandtxt"><b>CIA ITSON</b><span>'
+    var h='<div class="iw-brand">'+brandBadge()+'<div class="iw-brandtxt"><b>ITSON CIA Wrap</b><span>'
       + (current?current.text:'Portal') + '</span></div>'
       + '<button class="iw-themebtn" data-theme-toggle title="Tema claro/oscuro">'+themeIcon()+'</button></div>';
     h+='<div class="iw-search">'+ic('<circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/>')
