@@ -30,6 +30,15 @@ html.iw-dark {
   --w-shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 30px rgba(0,0,0,.55);
 }
 
+/* scrollbars estilizados (respetan claro/oscuro) — antes salian blancos por defecto */
+html.itson-wrap { scrollbar-width: thin; scrollbar-color: var(--w-line) transparent; }
+html.itson-wrap ::-webkit-scrollbar { width: 11px; height: 11px; }
+html.itson-wrap ::-webkit-scrollbar-track { background: transparent; }
+html.itson-wrap ::-webkit-scrollbar-thumb { background: var(--w-line) !important; border-radius: 8px;
+  border: 3px solid transparent; background-clip: padding-box !important; }
+html.itson-wrap ::-webkit-scrollbar-thumb:hover { background: var(--w-muted) !important; background-clip: padding-box !important; }
+html.itson-wrap ::-webkit-scrollbar-corner { background: transparent; }
+
 /* base tipografia / fondo */
 html.itson-wrap,
 html.itson-wrap body { background: var(--w-bg) !important; }

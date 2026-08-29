@@ -99,16 +99,15 @@ var REMOTE_CSS_URL = "";
     de.classList.toggle('iw-content', enabled && r === 'CONTENT');
   }
 
-  // redimensiona el frameset (solo desde el doc superior): NAV mas ancho, header mas delgado
+  // ensancha el sidebar UNA SOLA VEZ por documento (solo el doc superior).
+  // OJO: hacerlo en cada mutacion (observer) corrompia la geometria -> aqui es idempotente.
   function tuneFrameset(){
-    if (window.top !== window.self) return;
-    var outer = document.querySelector('frameset[rows]');
-    if (!outer) return;
+    if (frameRole() !== 'TOP' || !enabled) return;
+    var de = document.documentElement;
+    if (de.classList.contains('iw-tuned')) return;
     var inner = document.querySelector('frameset[cols]');
-    try {
-      outer.rows = enabled ? '56,*' : '65,*';
-      if (inner) inner.cols = enabled ? '244,*' : '195,*';
-    } catch (e) {}
+    if (!inner) return;
+    try { inner.cols = '240,*'; de.classList.add('iw-tuned'); } catch (e) {}
   }
 
   /* ---------- SHELL nivel B (solo homepage) ---------- */
@@ -353,6 +352,7 @@ var REMOTE_CSS_URL = "";
     applyReskin();
     applyTheme();
     applyRoles();
+    tuneFrameset();
     if(enabled){ buildShell(); buildNavSidebar(); buildHeaderBar(); }
     else { removeShell(); removeNavSidebar(); removeHeaderBar(); }
   }
