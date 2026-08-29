@@ -378,11 +378,3 @@ html.itson-wrap .text-password .txt2, html.itson-wrap a.txt2 { color: var(--w-ac
 html.itson-wrap a[href*="avisodeprivacidad"],
 html.itson-wrap a[href*="avisos-de-privacidad"],
 html.itson-wrap a[href*="Aviso"] { color: var(--w-muted) !important; }
-
-/* boton flotante inyectado por content.js */
-#itson-wrap-fab {
-  position: fixed; right: 16px; bottom: 16px; z-index: 2147483647;
-  font: 600 12px var(--w-font); padding: 8px 14px; border-radius: 999px;
-  border: none; cursor: pointer; color: #fff;
-  box-shadow: 0 4px 14px rgba(20,30,55,.25);
-}

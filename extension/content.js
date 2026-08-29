@@ -516,35 +516,20 @@ var REMOTE_CSS_URL = "";
     else { removeShell(); removeNavSidebar(); removeHeaderBar(); removeTiles(); }
   }
 
-  function paintFab(){ var f=document.getElementById('itson-wrap-fab'); if(f){ f.textContent=enabled?'Wrap ON':'Wrap OFF'; f.style.background=enabled?'#2f5bea':'#8a93a5'; } }
-  // el fab va: en la homepage (top con body normal) o, en paginas frameset, dentro del frame TargetContent
-  function canMountFab(){
-    if(frameRole()==='CONTENT') return true;
-    if(window.top===window.self && document.body && document.body.tagName!=='FRAMESET') return true;
-    return false;
-  }
-  function mountFab(){
-    if(!canMountFab() || document.getElementById('itson-wrap-fab') || !document.body) return;
-    var fab=document.createElement('button'); fab.id='itson-wrap-fab'; fab.type='button';
-    fab.textContent=enabled?'Wrap ON':'Wrap OFF'; fab.style.background=enabled?'#2f5bea':'#8a93a5';
-    fab.style.zIndex='2147483600';
-    fab.addEventListener('click', function(){ setEnabled(!enabled); });
-    document.body.appendChild(fab);
-  }
-  function setEnabled(v){ enabled=v; try{ api.storage.local.set({ itson_wrap_enabled:v }); }catch(e){} apply(); paintFab(); }
+  // El on/off se controla desde el popup de la extensión (ya no hay botón flotante).
+  function setEnabled(v){ enabled=v; try{ api.storage.local.set({ itson_wrap_enabled:v }); }catch(e){} apply(); }
 
-  try{ api.storage.local.get({ itson_wrap_enabled:true, itson_wrap_theme:'dark' }, function(r){ enabled=r.itson_wrap_enabled; theme=r.itson_wrap_theme; apply(); mountFab(); }); }
-  catch(e){ apply(); mountFab(); }
+  try{ api.storage.local.get({ itson_wrap_enabled:true, itson_wrap_theme:'dark' }, function(r){ enabled=r.itson_wrap_enabled; theme=r.itson_wrap_theme; apply(); }); }
+  catch(e){ apply(); }
 
   try{ api.storage.onChanged.addListener(function(ch,area){
     if(area!=='local') return;
-    if(ch[KEY]){ enabled=ch[KEY].newValue; apply(); paintFab(); }
+    if(ch[KEY]){ enabled=ch[KEY].newValue; apply(); }
     if(ch[TKEY]){ theme=ch[TKEY].newValue; applyTheme(); paintThemeBtns(); }
   }); }catch(e){}
 
   /* PeopleSoft re-renderiza por postbacks: re-aplicar de forma idempotente */
   var mo=new MutationObserver(function(){
-    if(!document.getElementById('itson-wrap-fab')) mountFab();
     injectRemoteCss();
     document.documentElement.classList.toggle('itson-wrap', enabled);
     applyRoles();
@@ -577,9 +562,7 @@ var REMOTE_CSS_URL = "";
       c.querySelectorAll('input,textarea,select').forEach(function(el){ el.removeAttribute('value'); try{el.value='';}catch(_){}} );
       var out='### '+(location.href||'')+'\n'+c.innerHTML.slice(0,55000);
       var ok=iwCopyText(out);
-      var f=document.getElementById('itson-wrap-fab');
-      if(f){ var old=f.textContent; f.textContent = ok?'DOM copiado ✓':'copia falló'; setTimeout(function(){ paintFab(); }, 1500); }
-      console.log('ITSON Wrap capture: '+(ok?'copiado '+out.length+' chars':'fallo'));
+      console.log('ITSON CIA Wrap capture: '+(ok?'copiado '+out.length+' chars':'fallo'));
     }catch(err){ console.log('ITSON Wrap capture error', err); }
   }, true);
 })();
