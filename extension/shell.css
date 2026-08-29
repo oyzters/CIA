@@ -97,10 +97,12 @@ html.iw-shell #MENU + br{ display:none!important; }
 #iw-main .sect{ font-weight:700; font-size:16px; margin:0 0 14px; display:flex; align-items:center; gap:10px; }
 #iw-main .sect .c{ font-weight:500; font-size:12px; color:var(--iw-muted); background:var(--iw-surface2); border:1px solid var(--iw-line); padding:2px 8px; border-radius:20px; }
 
-#iw-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; align-items:start; }
+/* masonry: tarjetas empacadas por columnas, cada una a su altura (sin huecos) */
+#iw-grid{ columns:340px; column-gap:16px; }
 #iw-grid .card{ background:var(--iw-surface); border:1px solid var(--iw-line); border-radius:18px;
   padding:22px; box-shadow:var(--iw-shadow-sm); display:flex; flex-direction:column; gap:12px;
   text-decoration:none; color:var(--iw-ink);
+  break-inside:avoid; -webkit-column-break-inside:avoid; margin:0 0 16px;
   transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
 #iw-grid .card:hover{ transform:translateY(-4px); box-shadow:var(--iw-shadow); border-color:var(--iw-brand); }
 #iw-grid .card .top{ cursor:pointer; display:flex; align-items:flex-start; gap:13px; }
